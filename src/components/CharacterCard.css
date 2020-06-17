@@ -1,0 +1,24 @@
+.card-container {
+  width: 20rem;
+  height: 20rem;
+  background-color: black;
+  margin: 15px;
+  overflow: hidden;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  -webkit-box-shadow: 4px 11px 21px -6px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 11px 21px -6px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 11px 21px -6px rgba(0, 0, 0, 0.75);
+  transition: 0.8s;
+}
+.card-container h3 {
+  font-family: fantasy;
+  letter-spacing: 0.1rem;
+  color: antiquewhite;
+}
+.card-container:hover {
+  width: 21rem;
+  height: 21rem;
+}

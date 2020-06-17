@@ -1,0 +1,51 @@
+.detail-container {
+  background-color: white;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.detail-header {
+  width: 100%;
+  display: flex;
+  background-color: #DB2B2B;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+.detail-header h1 {
+  color: white;
+  letter-spacing: .1rem;
+}
+.detail-header button {
+  color: black;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+.detail-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.detail-content h2 {
+  color: #DB2B2B;
+  letter-spacing: .1rem;
+
+}
+.character-detail-card p {
+  color: wheat;
+}
+
+.character-detail-card h4 {
+  color: wheat;
+}
+.comics-list-detail{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 35rem;
+}
