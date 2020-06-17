@@ -29,6 +29,17 @@ export default function Home() {
         history.push(`/detail/${characterId}`);
     }
 
+    const decreasePage = () => {
+        setSelectedPage(c => c - 1)
+        window.scrollTo(0, scrollRef.current.offsetTop)
+    }
+
+    const increasePage = () => {
+        setSelectedPage(c => c + 1)
+        window.scrollTo(0, scrollRef.current.offsetTop)
+
+    }
+
     useEffect(() => {
         //page bottom request
         const onScroll = e => {
@@ -47,6 +58,7 @@ export default function Home() {
         //first request
         getCharacters(0, 30);
     }, []);
+
     return (
         <div className="container">
             <div className={"header"}>
@@ -56,7 +68,6 @@ export default function Home() {
                 {
                     characters.length === 0 ?
                         <h5>Loading...</h5> : (
-
                             <div
                                 ref={scrollRef}
                                 style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center", display: "flex" }}>
@@ -72,22 +83,13 @@ export default function Home() {
                                         loading ? (
                                             <p>loading...</p>
                                         ) : (
-
                                                 <>
                                                     {selectedPage !== 1 && (
-                                                        <PaginationButton number={"prev"} selectPage={() => {
-                                                            setSelectedPage(c => c - 1)
-                                                            window.scrollTo(0, scrollRef.current.offsetTop)
-
-                                                        }} />
+                                                        <PaginationButton number={"prev"} selectPage={decreasePage} />
                                                     )}
                                                     {
                                                         selectedPage !== 5 && (
-                                                            <PaginationButton number={"next"} selectPage={() => {
-                                                                setSelectedPage(c => c + 1)
-                                                                window.scrollTo(0, scrollRef.current.offsetTop)
-
-                                                            }} />
+                                                            <PaginationButton number={"next"} selectPage={increasePage} />
 
                                                         )
                                                     }
