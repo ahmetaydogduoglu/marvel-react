@@ -5,9 +5,11 @@ import PaginationButton from "../components/PaginationButton"
 import { useHistory } from "react-router-dom";
 import md5 from "md5";
 export default function Home() {
+    //state
     const [characters, setCharacters] = useState([]);
     const [selectedPage, setSelectedPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    //navigaiton
     const history = useHistory();
     //Ref
     const scrollRef = useRef(null)
