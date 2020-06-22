@@ -24,7 +24,7 @@ export default function Home() {
             setCharacters(c => c.concat(json.data.results));
             setLoading(false)
         } catch (error) {
-            console.log(error);
+            alert("There is a problem")
         }
     }
 

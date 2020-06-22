@@ -8,13 +8,19 @@ export default function Detail({ match }) {
     const [comics, setComics] = useState(null);
     const { id } = useParams();
     const history = useHistory();
+
     const getCharacter = async () => {
-        const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=e9347c337310c590dec9467deba1f4e8&hash=95422e9826295d0e7043fa7af1147625`)
-        const comicsResponse = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=1&apikey=e9347c337310c590dec9467deba1f4e8&hash=95422e9826295d0e7043fa7af1147625&dateRange=2005-01-01,2020-12-12`)
-        const comicsJson = await comicsResponse.json();
-        setComics(comicsJson.data.results)
-        const json = await response.json();
-        setCharacter(json.data.results[0])
+        try{
+            const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=e9347c337310c590dec9467deba1f4e8&hash=95422e9826295d0e7043fa7af1147625`)
+            const comicsResponse = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=1&apikey=e9347c337310c590dec9467deba1f4e8&hash=95422e9826295d0e7043fa7af1147625&dateRange=2005-01-01,2020-12-12&limit=10`)
+            const comicsJson = await comicsResponse.json();
+            setComics(comicsJson.data.results)
+            const json = await response.json();
+            setCharacter(json.data.results[0])
+        }catch(error){
+            alert("There is a problem")
+        }
+       
     }
 
     useEffect(() => {
