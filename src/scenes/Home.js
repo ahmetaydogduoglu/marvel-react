@@ -3,7 +3,7 @@ import "./Home.css"
 import Card from "../components/CharacterCard"
 import PaginationButton from "../components/PaginationButton"
 import { useHistory } from "react-router-dom";
-import md5 from "md5";
+import { getCharactersList } from "../services/getCharacters"
 export default function Home() {
     //state
     const [characters, setCharacters] = useState([]);
@@ -18,13 +18,11 @@ export default function Home() {
     const getCharacters = async (offset, limit) => {
         try {
             setLoading(true)
-            const apiHash = md5("152673f008e9f857ff6a04a1230885ccd9ead8f84e9347c337310c590dec9467deba1f4e8")
-            const response = await fetch(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=e9347c337310c590dec9467deba1f4e8&hash=${apiHash}&limit=${limit}&offset=${offset}`)
-            const json = await response.json();
-            setCharacters(c => c.concat(json.data.results));
+            const response = await getCharactersList(limit, offset)
+            setCharacters(c => c.concat(response.data.results));
             setLoading(false)
         } catch (error) {
-            alert("There is a problem")
+            alert("Bir problem oluştu")
         }
     }
 

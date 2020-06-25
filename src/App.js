@@ -6,8 +6,9 @@ import {
   Route,
 } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Detail from "./pages/Detail"
+import Home from "./scenes/Home";
+import Detail from "./scenes/Detail"
+
 
 function App() {
   return (
