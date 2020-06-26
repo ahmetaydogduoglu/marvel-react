@@ -20,7 +20,6 @@ export default function Detail() {
         } catch (error) {
             alert("There is a problem");
         }
-
     }
 
     useEffect(() => {
