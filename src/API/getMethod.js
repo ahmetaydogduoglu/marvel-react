@@ -1,18 +1,12 @@
 import apiUrl from "../constant/apiUrl";
-import apiToken from "../helpers/apiKeyGenerator"
+import apiToken from "../helpers/apiKeyGenerator";
+
 const getMethod = async (endpoint, params) => {
-    //all get method request
-    const response = await fetch(`${apiUrl}${endpoint}?${apiToken()}${params}`);
-    const json = await response.json();
     return new Promise(function (resolve, reject) {
-        if (response.status === 200) {
-            //status ok and handle data
-            resolve(json);
-        } else {
-            //error handled
-            reject(new Error(json.message));
-        }
-    })
+        fetch(`${apiUrl}${endpoint}?${apiToken()}${params}`)
+            .then(response => resolve(response.json()))
+            .catch(error => reject(error));
+    });
 }
 
 export default getMethod;

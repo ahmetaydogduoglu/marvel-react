@@ -57,16 +57,19 @@ export default function Detail() {
                             </div>
                             <div className={"comics-list-detail"}>
                                 <h3>Comics</h3>
-                                <ul>
-                                    {
-                                        comics === null ? (<p style={{ alignSelf: "center" }}>Loading</p>) :
-                                            comics.map((item, index) => (
+                                {
+                                    comics === null ? (<p style={{ alignSelf: "center" }}>Loading</p>) : (
+                                        <ul>
+                                            {comics.map((item, index) => (
                                                 <li key={index}>
                                                     {item.title}
                                                 </li>
-                                            ))
-                                    }
-                                </ul>
+                                            ))}
+                                        </ul>
+                                    )
+
+                                }
+
                             </div>
                         </>
 

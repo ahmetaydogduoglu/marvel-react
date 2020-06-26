@@ -1,18 +1,27 @@
-import React, { useEffect, useState, useRef } from 'react'
-import "./Home.css"
-import Card from "../components/CharacterCard"
-import PaginationButton from "../components/PaginationButton"
+//global
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from "react-router-dom";
-import { getCharactersList } from "../services/getCharacters"
+//local folder
+import "./Home.css";
+//components
+import PaginationButton from "../components/PaginationButton";
+import Loading from "../components/loading"
+import CharactersMapping from "../components/Lists/CharactersMapping"
+//services
+import { getCharactersList } from "../services/getCharacters";
+
 export default function Home() {
+
     //state
     const [characters, setCharacters] = useState([]);
     const [selectedPage, setSelectedPage] = useState(1);
     const [loading, setLoading] = useState(false);
+
     //navigaiton
     const history = useHistory();
+
     //Ref
-    const scrollRef = useRef(null)
+    const scrollRef = useRef(null);
 
 
     const getCharacters = (offset, limit) => {
@@ -26,27 +35,30 @@ export default function Home() {
         })
     }
 
+    //view detail character with id 
     const redirectDetail = (characterId) => {
         history.push(`/detail/${characterId}`);
     }
 
+
+    //pagination button func
     const decreasePage = () => {
-        setSelectedPage(c => c - 1)
-        window.scrollTo(0, scrollRef.current.offsetTop)
+        setSelectedPage(c => c - 1);
+        window.scrollTo(0, scrollRef.current.offsetTop);
     }
 
     const increasePage = () => {
         setSelectedPage(c => c + 1)
-        window.scrollTo(0, scrollRef.current.offsetTop)
+        window.scrollTo(0, scrollRef.current.offsetTop);
 
     }
 
     useEffect(() => {
         //page bottom request
         const onScroll = e => {
-            if (e.target.documentElement.scrollTop + e.target.documentElement.offsetHeight > e.target.documentElement.scrollHeight - 50) {
+            if (e.target.documentElement.scrollTop + e.target.documentElement.offsetHeight > e.target.documentElement.scrollHeight / 2) {
                 if (characters.length - (30 * (selectedPage)) === 0 && !loading && selectedPage !== 5) {
-                    console.log(characters.length - (30 * (selectedPage)))
+                    console.log(characters.length - (30 * (selectedPage)));
                     getCharacters(30 * (selectedPage), 30);
                 }
             }
@@ -68,21 +80,19 @@ export default function Home() {
             <div className="list-container">
                 {
                     characters.length === 0 ?
-                        <h5>Loading...</h5> : (
+                        <Loading message="Characters " />
+                        : (
                             <div
-                                ref={scrollRef}
-                                style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center", display: "flex" }}>
-                                {
-                                    characters.slice((selectedPage - 1) * 30, ((selectedPage - 1) * 30) + 30).map(item => {
-                                        return (
-                                            <Card key={item.id} content={item} handleClick={redirectDetail} />
-                                        )
-                                    })
-                                }
+                                className="character-list-row" ref={scrollRef}>
+                                {/*characters mapping*/}
+                                <CharactersMapping
+                                    data={characters.slice((selectedPage - 1) * 30, ((selectedPage - 1) * 30) + 30)}
+                                    redirectDetail={redirectDetail}
+                                />
                                 <div className="paginaiton-contaiener">
                                     {
                                         loading ? (
-                                            <p>loading...</p>
+                                            <Loading message="Other Page " />
                                         ) : (
                                                 <>
                                                     {selectedPage !== 1 && (

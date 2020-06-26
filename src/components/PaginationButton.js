@@ -1,6 +1,8 @@
 import React from 'react'
 import "./PaginationButton.css"
-export default function PaginationButton({ number, selectPage }) {
+import PropsTypes from "prop-types"
+
+function PaginationButton({ number, selectPage }) {
     return (
         <button
             className="pagination-button"
@@ -9,3 +11,10 @@ export default function PaginationButton({ number, selectPage }) {
         </button>
     )
 }
+
+PaginationButton.propTypes = {
+    number: PropsTypes.number.isRequired,
+    selectPage: PropsTypes.func.isRequired
+}
+
+export default PaginationButton
