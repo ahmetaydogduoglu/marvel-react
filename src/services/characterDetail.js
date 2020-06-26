@@ -1,22 +1,8 @@
-import apiToken from "../helpers/md5Generator"
+import getMethod from "../API/getMethod"
 
+//character detail get
+export const getCharacterDetail = (characterId) => getMethod(`/characters/${characterId}`, "");
 
-export const getCharacterDetail = async (characterId) => {
-    try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/characters/${characterId}?ts=1&apikey=${process.env.REACT_APP_API_PUBLIC_KEY}&hash=${apiToken()}`)
-        const json = response.json();
-        return json
-    } catch (error) {
-        alert("There is a problem");
-    }
-}
+//This comics belong to call with id character
+export const getCharacterComics = async (characterId, dateRange, limit) => getMethod(`/characters/${characterId}/comics`, `&dateRange=2005-01-01,2020-12-12&limit=${limit}`);
 
-export const getCharacterComics = async (characterId, dateRange, limit) => {
-    try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/characters/${characterId}/comics?ts=1&apikey=${process.env.REACT_APP_API_PUBLIC_KEY}&hash=${apiToken()}&dateRange=2005-01-01,2020-12-12&limit=${limit}`)
-        const json = response.json();
-        return json
-    } catch (error) {
-        alert("There is a problem");
-    }
-}

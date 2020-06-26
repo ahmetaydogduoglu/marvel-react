@@ -11,15 +11,15 @@ export default function Detail() {
     const { id } = useParams();
     const history = useHistory();
 
-    const getCharacterWithComics = async () => {
-        try {
-            const comicsJson = await getCharacterComics(id, { startDate: "2005-01-01", endDate: "2020-05-05" }, 10);
-            const characterDetail = await getCharacterDetail(id);
-            setComics(comicsJson.data.results);
-            setCharacter(characterDetail.data.results[0]);
-        } catch (error) {
-            alert("There is a problem");
-        }
+    const getCharacterWithComics = () => {
+        getCharacterDetail(id).then(content => {
+            setCharacter(content.data.results[0]);
+            getCharacterComics(id, "2005-01-01,2020-05-06", 15).then(content => {
+                setComics(content.data.results);
+            })
+        }).catch(error => {
+            alert(error);
+        })
     }
 
     useEffect(() => {
@@ -64,11 +64,12 @@ export default function Detail() {
                                 <h3>Comics</h3>
                                 <ul>
                                     {
-                                        comics.map((item, index) => (
-                                            <li key={index}>
-                                                {item.title}
-                                            </li>
-                                        ))
+                                        comics === null ? (<p style={{ alignSelf: "center" }}>Loading</p>) :
+                                            comics.map((item, index) => (
+                                                <li key={index}>
+                                                    {item.title}
+                                                </li>
+                                            ))
                                     }
                                 </ul>
                             </div>

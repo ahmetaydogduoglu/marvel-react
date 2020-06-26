@@ -15,15 +15,14 @@ export default function Home() {
     const scrollRef = useRef(null)
 
 
-    const getCharacters = async (offset, limit) => {
-        try {
-            setLoading(true)
-            const response = await getCharactersList(limit, offset)
-            setCharacters(c => c.concat(response.data.results));
-            setLoading(false)
-        } catch (error) {
-            alert("Bir problem oluştu")
-        }
+    const getCharacters = (offset, limit) => {
+        setLoading(true)
+        getCharactersList(limit, offset).then(content => {
+            setCharacters(c => c.concat(content.data.results));
+            setLoading(false);
+        }).catch(error => {
+            alert(error);
+        })
     }
 
     const redirectDetail = (characterId) => {
