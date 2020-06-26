@@ -17,6 +17,7 @@ export default function Home() {
 
     const getCharacters = (offset, limit) => {
         setLoading(true)
+        //call get character
         getCharactersList(limit, offset).then(content => {
             setCharacters(c => c.concat(content.data.results));
             setLoading(false);

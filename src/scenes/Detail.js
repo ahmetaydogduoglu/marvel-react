@@ -12,11 +12,13 @@ export default function Detail() {
     const history = useHistory();
 
     const getCharacterWithComics = () => {
+        // call get character content
         getCharacterDetail(id).then(content => {
             setCharacter(content.data.results[0]);
-            getCharacterComics(id, "2005-01-01,2020-05-06", 15).then(content => {
-                setComics(content.data.results);
-            })
+            //call get charater comics
+            return getCharacterComics(id, "2005-01-01,2020-05-06", 15)
+        }).then(comics => {
+            setComics(comics.data.results);
         }).catch(error => {
             alert(error);
         })
