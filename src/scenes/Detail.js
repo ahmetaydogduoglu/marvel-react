@@ -25,7 +25,9 @@ export default function Detail() {
     }
 
     useEffect(() => {
-        getCharacterWithComics();
+        if (character === null) {
+            getCharacterWithComics();
+        }
     }, [])
 
     return (
@@ -44,16 +46,7 @@ export default function Detail() {
                     character === null ? "loading..." : (
                         <>
                             <h2>{character.name}</h2>
-                            <div className={"character-detail-card"} style={{
-                                flexDirection: "row",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                height: "20rem",
-                                width: "35rem",
-                                backgroundColor: "black",
-                                borderRadius: "15px",
-                            }}>
+                            <div className={"character-detail-card"}>
                                 <img src={`${character.thumbnail.path}/portrait_fantastic.jpg`} alt="Girl in a jacket" width="40%" height="100%"></img>
                                 <div style={{ width: "65%", height: "100%", padding: ".5rem" }}>
                                     <h4>Character Descrtiption</h4>

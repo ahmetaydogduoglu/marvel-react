@@ -9,14 +9,14 @@
 .detail-header {
   width: 100%;
   display: flex;
-  background-color: #DB2B2B;
+  background-color: #db2b2b;
   justify-content: center;
   align-items: center;
   height: 10vh;
 }
 .detail-header h1 {
   color: white;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
 }
 .detail-header button {
   color: black;
@@ -32,9 +32,19 @@
   align-items: center;
 }
 .detail-content h2 {
-  color: #DB2B2B;
-  letter-spacing: .1rem;
-
+  color: #db2b2b;
+  letter-spacing: 0.1rem;
+}
+.character-detail-card {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20rem;
+  width: 35rem;
+  background-color: black;
+  border-radius: 15px;
+  overflow: hidden;
 }
 .character-detail-card p {
   color: wheat;
@@ -43,9 +53,24 @@
 .character-detail-card h4 {
   color: wheat;
 }
-.comics-list-detail{
+.comics-list-detail {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 35rem;
+}
+
+@media screen and (max-width: 992px) {
+  .comics-list-detail {
+    width: 20rem;
+  }
+  .character-detail-card {
+    width: 21rem;
+  }
+  .detail-content h2 {
+    font-size: 2rem;
+  }
+  .detail-header h1 {
+    font-size: 1.4rem;
+  }
 }

@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  
 } from "react-router-dom";
 
 import Home from "./scenes/Home";
@@ -12,11 +13,9 @@ import Detail from "./scenes/Detail"
 
 function App() {
   return (
-    <Router>
+    <Router  >
       <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
+        <Route path="/" component={Home} exact />
         <Route path="/detail/:id" exact>
           <Detail />
         </Route>
