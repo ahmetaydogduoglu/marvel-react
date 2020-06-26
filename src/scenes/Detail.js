@@ -16,7 +16,7 @@ export default function Detail() {
             const comicsJson = await getCharacterComics(id, { startDate: "2005-01-01", endDate: "2020-05-05" }, 10);
             setComics(comicsJson.data.results);
             const characterDetail = await getCharacterDetail(id);
-            setCharacter(json.data.results[0]);
+            setCharacter(characterDetail.data.results[0]);
         } catch (error) {
             alert("There is a problem");
         }
