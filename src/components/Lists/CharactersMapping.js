@@ -1,6 +1,8 @@
+//global imports
 import React from 'react'
-import Card from "../CharacterCard";
 import PropsTypes from "prop-types"
+//Components folders
+import Card from "../CharacterCard";
 function CharactersMapping({ data, redirectDetail }) {
     return (
         data.map(item => (
@@ -9,7 +11,7 @@ function CharactersMapping({ data, redirectDetail }) {
     )
 }
 
-CharactersMapping.propTypes  = {
+CharactersMapping.propTypes = {
     data: PropsTypes.array.isRequired
 }
 

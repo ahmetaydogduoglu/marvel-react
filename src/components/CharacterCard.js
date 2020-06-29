@@ -1,6 +1,9 @@
+//global imports
 import React from 'react'
-import "./CharacterCard.css"
 import PropsTypes from "prop-types"
+//local folders
+import "./CharacterCard.css"
+
 
 function CharacterCard({ content, handleClick }) {
     return (

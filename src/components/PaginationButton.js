@@ -1,6 +1,10 @@
+//global imports
 import React from 'react'
-import "./PaginationButton.css"
 import PropsTypes from "prop-types"
+//local folder
+import "./PaginationButton.css"
+
+
 
 function PaginationButton({ number, selectPage }) {
     return (

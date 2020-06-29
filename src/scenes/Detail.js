@@ -1,8 +1,11 @@
+//global imports
 import React, { useEffect, useState } from 'react'
-import "./Detail.css"
 import {
     useParams, useHistory
 } from "react-router-dom";
+//local imports
+import "./Detail.css"
+//services
 import { getCharacterDetail, getCharacterComics } from "../services/characterDetail"
 
 export default function Detail() {
@@ -25,10 +28,8 @@ export default function Detail() {
     }
 
     useEffect(() => {
-        if (character === null) {
-            getCharacterWithComics();
-        }
-    }, [])
+        getCharacterWithComics();
+    })
 
     return (
         <div className={"detail-container"}>
