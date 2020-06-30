@@ -5,6 +5,9 @@ import {
 } from "react-router-dom";
 //local imports
 import "./Detail.css"
+//components
+import ComicsMap from "../components/Lists/ComicsMapping"
+import Loading from "../components/loading"
 //services
 import { getCharacterDetail, getCharacterComics } from "../services/characterDetail"
 
@@ -16,23 +19,27 @@ export default function Detail() {
 
     const getCharacterWithComics = () => {
         // call get character content
-        getCharacterDetail(id).then(content => {
-            setCharacter(content.data.results[0]);
-            //call get charater comics
-            return getCharacterComics(id, "2005-01-01,2020-05-06", 15)
-        }).then(comics => {
-            setComics(comics.data.results);
-        }).catch(error => {
-            alert(error);
-        })
+        getCharacterDetail(id)
+            .then(content => {
+                setCharacter(content.data.results[0]);
+                console.log(content.data.results[0]);
+                //call get charater comics
+                return getCharacterComics(id, "2005-01-01,2020-05-06", 15);
+            }).then(comics => {
+                setComics(comics.data.results);
+            }).catch(error => {
+                alert(error);
+            })
     }
 
     useEffect(() => {
         getCharacterWithComics();
-    })
+        return () => 0
+    }, [])
 
     return (
         <div className={"detail-container"}>
+
             <div className={"detail-header"}>
                 <button
                     onClick={() => history.goBack()}
@@ -40,11 +47,11 @@ export default function Detail() {
                     Back
                 </button>
                 <h1>Marvel Characters</h1>
-
             </div>
+
             <div className={"detail-content"}>
                 {
-                    character === null ? "loading..." : (
+                    character === null ? <Loading message="Character " /> : (
                         <>
                             <h2>{character.name}</h2>
                             <div className={"character-detail-card"}>
@@ -52,28 +59,19 @@ export default function Detail() {
                                 <div style={{ width: "65%", height: "100%", padding: ".5rem" }}>
                                     <h4>Character Descrtiption</h4>
                                     <p style={{ color: "#fff" }}>
-                                        {character.description}
+                                        {character.description.length > 0 ? character.description : "No Description."}
                                     </p>
                                 </div>
                             </div>
                             <div className={"comics-list-detail"}>
                                 <h3>Comics</h3>
                                 {
-                                    comics === null ? (<p style={{ alignSelf: "center" }}>Loading</p>) : (
-                                        <ul>
-                                            {comics.map((item, index) => (
-                                                <li key={index}>
-                                                    {item.title}
-                                                </li>
-                                            ))}
-                                        </ul>
+                                    comics === null ? (<Loading message="Comics " />) : (
+                                        <ComicsMap data={comics} />
                                     )
-
                                 }
-
                             </div>
                         </>
-
                     )
                 }
 
