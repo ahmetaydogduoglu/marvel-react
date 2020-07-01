@@ -8,6 +8,7 @@ import PaginationButton from "../components/PaginationButton";
 import Loading from "../components/loading";
 import CharactersMapping from "../components/Lists/CharactersMapping";
 import Navbar from "../components/Navbar/Navbar";
+import PaginationMapping from "../components/Lists/PaginationMapping"
 // import Filter from "../components/Filter/Filter";
 import Search from "../components/Search/Search"
 //services
@@ -152,46 +153,10 @@ function Home() {
                                         />
                                         {!filterActive && (
                                             <div className="paginaiton-contaiener">
-                                                <button onClick={() => setSelectedPagintaion(0)}>
-                                                    1
-                                                </button>
-                                                <p>...</p>
-                                                {
-                                                    selectedPagination > 3 ? (
-                                                        totalCount.slice(selectedPagination - 2, selectedPagination + 3).map(item => (
-                                                            <button onClick={() => setSelectedPagintaion(item)}>
-                                                                {item + 1}
-                                                            </button>
-                                                        ))
-                                                    ) : (
-                                                            totalCount.slice(1, 6).map(item => (
-                                                                <button onClick={() => setSelectedPagintaion(item)}>
-                                                                    {item + 1}
-                                                                </button>
-                                                            ))
-                                                        )
-                                                }
-                                                <p>...</p>
-                                                <button onClick={() => setSelectedPagintaion(totalCount[totalCount.length - 1])}>
-                                                    {totalCount[totalCount.length - 1]}
-                                                </button>
-                                                {/* {
-                                                    loading ? (
-                                                        <Loading message="Other Page " />
-                                                    ) : (
-                                                            <>
-                                                                {selectedPage !== 1 && (
-                                                                    <PaginationButton number={"prev"} selectPage={decreasePage} />
-                                                                )}
-                                                                {
-                                                                    selectedPage !== 5 && (
-                                                                        <PaginationButton number={"next"} selectPage={increasePage} />
-
-                                                                    )
-                                                                }
-                                                            </>
-                                                        )
-                                                } */}
+                                                <PaginationMapping
+                                                    totalCount={totalCount}
+                                                    selectedPagination={selectedPagination}
+                                                    setSelectedPagintaion={setSelectedPagintaion} />
                                             </div>
                                         )}
 
