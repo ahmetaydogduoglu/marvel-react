@@ -3,9 +3,7 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect,
-
+  Route,  
 } from "react-router-dom";
 //scenes
 import Home from "./scenes/Home";
@@ -17,7 +15,7 @@ function App() {
   return (
     <>
       {/* <Navbar /> */}
-      <Router>
+      <Router >
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/detail/:id" exact component={Detail} />

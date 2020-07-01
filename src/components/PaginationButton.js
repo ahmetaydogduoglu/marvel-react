@@ -11,7 +11,7 @@ function PaginationButton({ number, selectPage }) {
         <button
             className="pagination-button"
             onClick={() => selectPage()}>
-            {number}
+            {number.toString()}
         </button>
     )
 }

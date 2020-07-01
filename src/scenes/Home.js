@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 import "./Home.css";
 //components
 import PaginationButton from "../components/PaginationButton";
-import Loading from "../components/loading"
-import CharactersMapping from "../components/Lists/CharactersMapping"
-import Navbar from "../components/Navbar/Navbar"
+import Loading from "../components/loading";
+import CharactersMapping from "../components/Lists/CharactersMapping";
+import Navbar from "../components/Navbar/Navbar";
 //services
 import { getCharactersList } from "../services/getCharacters";
 
@@ -26,10 +26,11 @@ function Home() {
 
 
     const getCharacters = (offset, limit) => {
-        setLoading(true)
+        setLoading(true);
         //call get character
         getCharactersList(limit, offset).then(content => {
             setCharacters(c => c.concat(content.data.results));
+            console.log("merhaba")
             setLoading(false);
         }).catch(error => {
             alert(error);

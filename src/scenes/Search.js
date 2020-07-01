@@ -11,7 +11,6 @@ import ResultMap from "../components/Lists/SearchResultMapping"
 import "./Search.css"
 //services
 import { searchCharacter } from "../services/searchCharacter"
-//utils 
 
 function Search() {
 
@@ -49,7 +48,7 @@ function Search() {
     }
 
     const redirectDetail = (characterId) => {
-        history.action(`/detail/${characterId}`)
+        history.push(`/detail/${characterId}`)
     }
 
     const buttonConfig = {
