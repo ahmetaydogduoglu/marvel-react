@@ -11,7 +11,7 @@ import Navbar from "../components/Navbar/Navbar"
 //services
 import { getCharactersList } from "../services/getCharacters";
 
-export default function Home() {
+function Home() {
 
     //state
     const [characters, setCharacters] = useState([]);
@@ -114,3 +114,5 @@ export default function Home() {
         </div>
     )
 }
+
+export default Home

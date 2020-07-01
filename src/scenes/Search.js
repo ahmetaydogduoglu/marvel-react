@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa';
+import { useHistory } from "react-router-dom";
 //componenst
 import Navbar from '../components/Navbar/Navbar'
 import Input from "../components/Input"
@@ -10,11 +11,17 @@ import ResultMap from "../components/Lists/SearchResultMapping"
 import "./Search.css"
 //services
 import { searchCharacter } from "../services/searchCharacter"
+//utils 
 
 function Search() {
+
+    //state
     const [name, setName] = useState("");
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    //histort
+    const history = useHistory();
 
     const search = () => {
         if (name.trim().length === 0) {
@@ -39,6 +46,10 @@ function Search() {
         onChange: e => {
             setName(e.target.value);
         }
+    }
+
+    const redirectDetail = (characterId) => {
+        history.action(`/detail/${characterId}`)
     }
 
     const buttonConfig = {
@@ -66,7 +77,7 @@ function Search() {
                                 result !== null ? (
                                     result.length === 0 ?
                                         <p>No Characters</p> :
-                                        <ResultMap data={result} redirectDetail={() => alert("merhaba")} />
+                                        <ResultMap data={result} redirectDetail={redirectDetail} />
                                 ) : null
                             )
                     }
