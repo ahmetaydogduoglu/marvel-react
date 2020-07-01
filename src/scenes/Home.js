@@ -13,6 +13,17 @@ import Search from "../components/Search/Search"
 //services
 import { getCharactersList } from "../services/getCharacters";
 
+
+const paginationButtonCreate = (totalCount) => {
+    let paginationNumbers = [];
+    console.log(totalCount);
+    for (let i = 0; i < totalCount / 40; i++) {
+        paginationNumbers = [...paginationNumbers, i];
+    }
+    return paginationNumbers;
+}
+
+
 function Home() {
 
     //state
@@ -22,7 +33,8 @@ function Home() {
     const [filterLoading, setFilterLoading] = useState(false);
     const [filterActive, setFilterActive] = useState(false);
     const [flterResult, setFilterResult] = useState([]);
-
+    const [totalCount, setTotalCount] = useState([]);
+    const [selectedPagination, setSelectedPagintaion] = useState(0)
     //navigaiton
     const history = useHistory();
 
@@ -39,6 +51,7 @@ function Home() {
                 setFilterResult(content.data.results);
             } else {
                 setCharacters(c => c.concat(content.data.results));
+                setTotalCount(paginationButtonCreate(content.data.total))
             }
             setLoading(false);
             setFilterLoading(false);
@@ -119,7 +132,7 @@ function Home() {
             {/* katman kontrolü revize edilecek */}
             <div className="container">
                 <div className="list-container">
-                    { 
+                    {
                         characters.length === 0 ?
                             <Loading message="Characters " />
                             : (
@@ -139,7 +152,30 @@ function Home() {
                                         />
                                         {!filterActive && (
                                             <div className="paginaiton-contaiener">
+                                                <button onClick={() => setSelectedPagintaion(0)}>
+                                                    1
+                                                </button>
+                                                <p>...</p>
                                                 {
+                                                    selectedPagination > 3 ? (
+                                                        totalCount.slice(selectedPagination - 2, selectedPagination + 3).map(item => (
+                                                            <button onClick={() => setSelectedPagintaion(item)}>
+                                                                {item + 1}
+                                                            </button>
+                                                        ))
+                                                    ) : (
+                                                            totalCount.slice(1, 6).map(item => (
+                                                                <button onClick={() => setSelectedPagintaion(item)}>
+                                                                    {item + 1}
+                                                                </button>
+                                                            ))
+                                                        )
+                                                }
+                                                <p>...</p>
+                                                <button onClick={() => setSelectedPagintaion(totalCount[totalCount.length - 1])}>
+                                                    {totalCount[totalCount.length - 1]}
+                                                </button>
+                                                {/* {
                                                     loading ? (
                                                         <Loading message="Other Page " />
                                                     ) : (
@@ -155,13 +191,12 @@ function Home() {
                                                                 }
                                                             </>
                                                         )
-                                                }
+                                                } */}
                                             </div>
                                         )}
 
                                     </div>
                                 </>
-
                             )
                     }
                 </div>
