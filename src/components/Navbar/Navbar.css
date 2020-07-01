@@ -1,8 +1,25 @@
 .header {
-    width: 100%;
-    display: flex;
-    background-color: black;
-    justify-content: center;
-    align-items: center;
-    height: 10vh;
-  }
+  width: 100%;
+  display: flex;
+  background-color: black;
+  height: 10vh;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.nav-button {
+  background-color: transparent;
+  border-width: 0px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.logo {
+  margin-right: 15px;
+}
+.hidden-box {
+  width: 1.9em;
+  height: 2px;
+  margin-left: 15px;
+  margin-right: 15px;
+}

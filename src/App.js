@@ -9,12 +9,12 @@ import {
 
 import Home from "./scenes/Home";
 import Detail from "./scenes/Detail"
-import Navbar from "./components/Navbar/Navbar"
+// import Navbar from "./components/Navbar/Navbar"
 
 function App() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Router  >
         <Switch>
           <Route path="/" component={Home} exact />

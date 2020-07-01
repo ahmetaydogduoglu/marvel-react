@@ -7,6 +7,7 @@ import "./Home.css";
 import PaginationButton from "../components/PaginationButton";
 import Loading from "../components/loading"
 import CharactersMapping from "../components/Lists/CharactersMapping"
+import Navbar from "../components/Navbar/Navbar"
 //services
 import { getCharactersList } from "../services/getCharacters";
 
@@ -74,7 +75,7 @@ export default function Home() {
 
     return (
         <div className="container">
-            
+            <Navbar />
             <div className="list-container">
                 {
                     characters.length === 0 ?
