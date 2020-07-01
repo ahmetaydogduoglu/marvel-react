@@ -1,0 +1,19 @@
+.button {
+  height: 35px;
+  width: 14.5%;
+  margin-left: 8px;
+  border-radius: 5px;
+  border-width: 0px;
+  background-color: #202020;
+  color: white;
+  transition: 0.6s;
+  font-family: fantasy;
+}
+.button:hover {
+  background-color: red;
+}
+@media screen and (max-width: 992px) {
+  .button {
+    font-size: 10px;
+  }
+}
