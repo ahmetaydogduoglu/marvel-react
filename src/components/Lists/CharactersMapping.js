@@ -12,7 +12,8 @@ function CharactersMapping({ data, redirectDetail }) {
 }
 
 CharactersMapping.propTypes = {
-    data: PropsTypes.array.isRequired
+    data: PropsTypes.array.isRequired,
+    redirectDetail: PropsTypes.func.isRequired,
 }
 
 export default CharactersMapping

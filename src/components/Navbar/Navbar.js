@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FaSearch, FaChevronLeft } from 'react-icons/fa';
+import { FaChevronLeft } from 'react-icons/fa';
 import {
     useHistory,
     useLocation
@@ -12,15 +12,9 @@ import logoUrl from "../../constant/logoUrl"
 
 function Navbar({ backButtonVisibility = false }) {
     const history = useHistory();
-    const location = useLocation();
     //go back page
     const goBack = () => history.goBack();
-    //go search page
-    const goSearch = () => {
-        if (location.pathname !== "/search") {
-            history.push("/search")
-        }
-    }
+
     return (
         <div className={"header"}>
             {
@@ -31,10 +25,10 @@ function Navbar({ backButtonVisibility = false }) {
                 ) : (<div className="hidden-box"></div>)
             }
             <img src={logoUrl} height={"45rem"} className="logo" alt="logo" />
-            <button className="nav-button" onClick={goSearch}>
+            <div className="hidden-box"></div>
+            {/* <button className="nav-button" onClick={goSearch}>
                 <FaSearch size={"1.9em"} color="red" />
-
-            </button>
+            </button> */}
         </div>
     )
 }

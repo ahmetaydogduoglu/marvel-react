@@ -8,6 +8,8 @@ import PaginationButton from "../components/PaginationButton";
 import Loading from "../components/loading";
 import CharactersMapping from "../components/Lists/CharactersMapping";
 import Navbar from "../components/Navbar/Navbar";
+// import Filter from "../components/Filter/Filter";
+import Search from "../components/Search/Search"
 //services
 import { getCharactersList } from "../services/getCharacters";
 
@@ -17,6 +19,9 @@ function Home() {
     const [characters, setCharacters] = useState([]);
     const [selectedPage, setSelectedPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [filterLoading, setFilterLoading] = useState(false);
+    const [filterActive, setFilterActive] = useState(false);
+    const [flterResult, setFilterResult] = useState([]);
 
     //navigaiton
     const history = useHistory();
@@ -24,17 +29,40 @@ function Home() {
     //Ref
     const scrollRef = useRef(null);
 
-
-    const getCharacters = (offset, limit) => {
+    //api call
+    const getCharacters = (offset, limit, nameStartsWith = null) => {
         setLoading(true);
         //call get character
-        getCharactersList(limit, offset).then(content => {
-            setCharacters(c => c.concat(content.data.results));
-            console.log("merhaba")
+        const params = `&limit=${limit}&offset=${offset}${nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : ""}`
+        getCharactersList(params).then(content => {
+            if (nameStartsWith !== null) {
+                setFilterResult(content.data.results);
+            } else {
+                setCharacters(c => c.concat(content.data.results));
+            }
             setLoading(false);
+            setFilterLoading(false);
         }).catch(error => {
             alert(error);
         })
+    }
+
+
+    //filter
+    const filterInCharacterName = (name) => {
+        let tempChatactersList = []
+        setFilterLoading(true);
+        characters.forEach(item => {
+            if (item.name.toLowerCase().startsWith(name)) {
+                tempChatactersList = tempChatactersList.concat(item)
+            }
+        })
+        if (tempChatactersList.length > 0) {
+            setFilterResult(tempChatactersList);
+            setFilterLoading(false);
+        } else {
+            getCharacters(0, 50, name);
+        }
     }
 
     //view detail character with id 
@@ -56,6 +84,12 @@ function Home() {
     }
 
     useEffect(() => {
+        if (!filterActive) {
+            setFilterResult([]);
+        }
+    }, [filterActive])
+
+    useEffect(() => {
         //page bottom request
         const onScroll = e => {
             if (e.target.documentElement.scrollTop + e.target.documentElement.offsetHeight > e.target.documentElement.scrollHeight / 2) {
@@ -74,45 +108,66 @@ function Home() {
         getCharacters(0, 30);
     }, []);
 
-    return (
-        <div className="container">
-            <Navbar />
-            <div className="list-container">
-                {
-                    characters.length === 0 ?
-                        <Loading message="Characters " />
-                        : (
-                            <div
-                                className="character-list-row" ref={scrollRef}>
-                                {/*characters mapping*/}
-                                <CharactersMapping
-                                    data={characters.slice((selectedPage - 1) * 30, ((selectedPage - 1) * 30) + 30)}
-                                    redirectDetail={redirectDetail}
-                                />
-                                <div className="paginaiton-contaiener">
-                                    {
-                                        loading ? (
-                                            <Loading message="Other Page " />
-                                        ) : (
-                                                <>
-                                                    {selectedPage !== 1 && (
-                                                        <PaginationButton number={"prev"} selectPage={decreasePage} />
-                                                    )}
-                                                    {
-                                                        selectedPage !== 5 && (
-                                                            <PaginationButton number={"next"} selectPage={increasePage} />
+    const searchConfig = {
+        setFilterActive: setFilterActive,
+        onFilter: filterInCharacterName
+    }
 
+    return (
+        <>
+            <Navbar />
+            {/* katman kontrolü revize edilecek */}
+            <div className="container">
+                <div className="list-container">
+                    { 
+                        characters.length === 0 ?
+                            <Loading message="Characters " />
+                            : (
+                                <>
+                                    <Search {...searchConfig} />
+                                    <div
+                                        className="character-list-row" ref={scrollRef}>
+                                        {/*characters mapping*/}
+
+                                        <CharactersMapping
+                                            data={
+                                                filterActive ?
+                                                    flterResult
+                                                    : characters.slice((selectedPage - 1) * 30, ((selectedPage - 1) * 30) + 30)
+                                            }
+                                            redirectDetail={redirectDetail}
+                                        />
+                                        {!filterActive && (
+                                            <div className="paginaiton-contaiener">
+                                                {
+                                                    loading ? (
+                                                        <Loading message="Other Page " />
+                                                    ) : (
+                                                            <>
+                                                                {selectedPage !== 1 && (
+                                                                    <PaginationButton number={"prev"} selectPage={decreasePage} />
+                                                                )}
+                                                                {
+                                                                    selectedPage !== 5 && (
+                                                                        <PaginationButton number={"next"} selectPage={increasePage} />
+
+                                                                    )
+                                                                }
+                                                            </>
                                                         )
-                                                    }
-                                                </>
-                                            )
-                                    }
-                                </div>
-                            </div>
-                        )
-                }
+                                                }
+                                            </div>
+                                        )}
+
+                                    </div>
+                                </>
+
+                            )
+                    }
+                </div>
             </div>
-        </div>
+        </>
+
     )
 }
 
