@@ -4,11 +4,10 @@ import { useHistory } from "react-router-dom";
 //local folder
 import "./Home.css";
 //components
-import PaginationButton from "../components/PaginationButton";
 import Loading from "../components/loading";
 import CharactersMapping from "../components/Lists/CharactersMapping";
 import Navbar from "../components/Navbar/Navbar";
-import PaginationMapping from "../components/Lists/PaginationMapping"
+import PaginationMapping from "../components/Pagination/Paginaiton"
 // import Filter from "../components/Filter/Filter";
 import Search from "../components/Search/Search"
 //services

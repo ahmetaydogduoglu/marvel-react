@@ -1,18 +1,18 @@
 .pagination-button {
-  width: 5rem;
-  margin-right: 15px;
+  width: 2.5rem;
   color: white;
+  margin-right: 5px;
   height: 2.5rem;
   background-color: black;
   border-width: 0px;
   justify-content: center;
   align-items: center;
   display: "flex";
+  font-family: fantasy;
   border-radius: 10px;
   transition: 0.3s;
 }
 
 .pagination-button:hover {
-  width: 5.2rem;
-  height: 2.7rem;
+  background-color: red;
 }
