@@ -11,32 +11,38 @@ function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
     const selectPage = () => setSelectedPagintaion(0);
     return (
         <>
-            <PaginationButton number={1} selectPage={selectPage} />
+            <PaginationButton selectedPagination={selectedPagination} number={1} selectPage={selectPage} />
             {selectedPagination > 3 && <p className="pagination-indacator">...</p>}
 
             {
                 selectedPagination > 3 ? (
                     selectedPagination >= totalCount.length - 4 ? (
                         <PaginationMapping
+                            selectedPagination={selectedPagination}
                             data={totalCount.slice(selectedPagination - 2, totalCount.length - 1)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />
 
                     ) : (
                             <PaginationMapping
+                                selectedPagination={selectedPagination}
                                 data={totalCount.slice(selectedPagination - 2, selectedPagination + 3)}
                                 setSelectedPagintaion={setSelectedPagintaion} />
                         )
 
                 ) : (
                         <PaginationMapping
+                            selectedPagination={selectedPagination}
                             data={totalCount.slice(1, 6)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />
                     )
             }
-            {selectedPagination <= totalCount.length - 4  && <p className="pagination-indacator">...</p>}
-            <PaginationButton number={totalCount.length} selectPage={() => setSelectedPagintaion(totalCount.length - 1)} />
+            {selectedPagination <= totalCount.length - 4 && <p className="pagination-indacator">...</p>}
+            <PaginationButton
+                selectedPagination={selectedPagination}
+                number={totalCount.length}
+                selectPage={() => setSelectedPagintaion(totalCount.length - 1)} />
         </>
     )
 }

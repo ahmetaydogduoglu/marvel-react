@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { FaChevronLeft } from 'react-icons/fa';
 import {
     useHistory,
-    useLocation
 } from "react-router-dom";
 //local files 
 import "./Navbar.css"

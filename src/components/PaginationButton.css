@@ -16,3 +16,7 @@
 .pagination-button:hover {
   background-color: red;
 }
+
+.pagination-button.selected-pagination {
+  background-color: red;
+}

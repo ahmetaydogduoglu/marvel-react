@@ -6,13 +6,14 @@ import Button from "../Button"
 //local files
 import "./Search.css"
 
-function Search({ setFilterActive, onFilter }) {
+function Search({ setFilterActive, onFilter, charactersLength }) {
     const [name, setName] = useState("");
 
     const inputConfig = {
         placeholder: "search character",
         value: name,
         name: "search",
+        disabled: charactersLength === 0 ? true : false,
         onChange: e => {
             setName(e.target.value);
             if (name.trim().length > 2) {
@@ -35,9 +36,9 @@ function Search({ setFilterActive, onFilter }) {
                 <FaSearch size={"1.5em"} color="black" />
                 <Input {...inputConfig} />
             </div>
-            <Button {...buttonConfig}>
+            {/* <Button {...buttonConfig}>
                 Search
-             </Button>
+             </Button> */}
         </div>
     )
 }

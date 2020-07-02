@@ -1,4 +1,4 @@
-import getMethod from "../API/getMethod"
+import { getMethod } from "../API/methods"
 
 //character detail get
 export const getCharacterDetail = (characterId) => getMethod(`/characters/${characterId}`, "");
