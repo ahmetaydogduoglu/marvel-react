@@ -35,8 +35,8 @@ function Filter({ setSelectedFilerOption, selectedFilterOption }) {
                 <button className={"filter-title-button"} onClick={() => setFilterContentVisibility(f => !f)}>
                     {
                         !filterContentVisibility ? (
-                            <FaChevronDown size={"2rem"} />
-                        ) : (<FaChevronUp size={"2rem"} />)
+                            <FaChevronDown color="#921c1c" size={"2rem"} />
+                        ) : (<FaChevronUp color="#921c1c" size={"2rem"} />)
                     }
                 </button>
             </div>
