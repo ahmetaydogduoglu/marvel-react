@@ -5,8 +5,10 @@ import PropsTypes from "prop-types"
 import PaginationButton from "../PaginationButton"
 
 function PaginationMapping({ data, setSelectedPagintaion }) {
-    return data.map(item => (
-        <PaginationButton number={item + 1} selectPage={() => setSelectedPagintaion(item)} />
+    return data.map((item, i) => (
+        <PaginationButton
+            key={i}
+            number={item + 1} selectPage={() => setSelectedPagintaion(item)} />
     ))
 }
 

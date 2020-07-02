@@ -8,6 +8,7 @@ import Loading from "../components/loading";
 import CharactersMapping from "../components/Lists/CharactersMapping";
 import Navbar from "../components/Navbar/Navbar";
 import PaginationMapping from "../components/Pagination/Paginaiton"
+import Filter from "../components/Filter/Filter"
 // import Filter from "../components/Filter/Filter";
 import Search from "../components/Search/Search"
 //services
@@ -124,6 +125,7 @@ function Home() {
             <div className="container">
                 <div className="list-container">
                     <Search  {...searchConfig} />
+                    <Filter />
                     {
                         loading ? <Loading message="Characters " /> :
                             (

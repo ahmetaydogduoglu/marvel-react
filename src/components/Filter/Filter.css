@@ -1,10 +1,43 @@
 .filter-container {
-  width: 90%;
-  height: 12rem;
+  width: 65%;
+  height: 15rem;
   margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
-  padding: 15px;
+  flex-direction: column;
+  padding-right: 15px;
+  padding-left: 15px;
+  justify-content: space-between;
   background-color: #c3bfbf;
   box-shadow: 0px 6px 3px 0px #b8b3b3;
+  flex-wrap: wrap;
+}
+.hidden {
+  height: 3.5rem;
+}
+
+.filter-option-list {
+  display: flex;
+  width: 10rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 2.6rem;
+}
+.filter-option-list label {
+  width: 80%;
+}
+
+.filter-title {
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  display: flex;
+}
+
+.filter-title-button {
+  height: 3.5rem;
+  background-color: transparent;
+  border-width: 0px;
 }
