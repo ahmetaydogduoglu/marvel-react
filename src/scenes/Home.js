@@ -34,19 +34,21 @@ function Home() {
     const [flterResult, setFilterResult] = useState([]);
     const [totalCount, setTotalCount] = useState([]);
     const [selectedPagination, setSelectedPagintaion] = useState(0);
-
+    const [selectedFilterOption, setSelectedFilterOption] = useState("name");
     //navigaiton
     const history = useHistory();
 
     //Ref
     const scrollRef = useRef(null);
-
-    //api call
-    const getCharacters = (offset, limit, nameStartsWith = null) => {
+    console.log("Filter Option :", selectedFilterOption)
+    //api call 
+    const getCharacters = (offset, limit, sortType, nameStartsWith = null) => {
         setLoading(true);
         //call get character
-        console.log(offset, limit)
-        const params = `&limit=${limit}&offset=${offset}${nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : ""}`
+        console.log("type:", sortType)
+        const nameParams = nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : ""
+        const orderBy = "&orderBy=" + sortType;
+        const params = `&limit=${limit}&offset=${offset}${nameParams}${orderBy}`;
         getCharactersList(params).then(content => {
             if (nameStartsWith !== null) {
                 setFilterResult(content.data.results);
@@ -72,7 +74,7 @@ function Home() {
         if (tempChatactersList.length > 0) {
             setFilterResult(tempChatactersList);
         } else {
-            getCharacters(0, 50, name);
+            getCharacters(0, 50, "name", name);
         }
     }
 
@@ -102,9 +104,13 @@ function Home() {
     // }, [selectedPagination]);
 
     useEffect(() => {
-        getCharacters(selectedPagination * 30, 30);
-        window.scrollTo(0, 0);
-    }, [selectedPagination]);
+        function callGetChatactesr(){
+          
+            getCharacters(selectedPagination * 30, 30, selectedFilterOption);
+            window.scrollTo(0, 0);
+        }
+        callGetChatactesr();
+    }, [selectedPagination, selectedFilterOption]);
 
     useEffect(() => {
         if (!filterActive) {
@@ -125,7 +131,7 @@ function Home() {
             <div className="container">
                 <div className="list-container">
                     <Search  {...searchConfig} />
-                    <Filter />
+                    <Filter setSelectedFilerOption={setSelectedFilterOption} selectedFilterOption={selectedFilterOption} />
                     {
                         loading ? <Loading message="Characters " /> :
                             (
