@@ -82,29 +82,28 @@ function Home() {
 
 
 
+    // useEffect(() => {
+
+    //     //page bottom request
+    //     // const onScroll = e => {
+    //     //     if (e.target.documentElement.scrollTop + e.target.documentElement.offsetHeight > e.target.documentElement.scrollHeight / 2) {
+    //     //         if (characters.length - (30 * (selectedPage)) === 0 && !loading && selectedPage !== 5) {
+    //     //             console.log(characters.length - (30 * (selectedPage)));
+    //     //             getCharacters(30 * (selectedPage), 30);
+    //     //         }
+    //     //     }
+    //     // };
+    //     // window.addEventListener("scroll", onScroll);
+    //     // return () => window.removeEventListener("scroll", onScroll);
+    //     console.log("2.")
+    //     getCharacters(selectedPagination * 30, 30);
+
+    // }, [selectedPagination]);
+
     useEffect(() => {
-
-        //page bottom request
-        // const onScroll = e => {
-        //     if (e.target.documentElement.scrollTop + e.target.documentElement.offsetHeight > e.target.documentElement.scrollHeight / 2) {
-        //         if (characters.length - (30 * (selectedPage)) === 0 && !loading && selectedPage !== 5) {
-        //             console.log(characters.length - (30 * (selectedPage)));
-        //             getCharacters(30 * (selectedPage), 30);
-        //         }
-        //     }
-        // };
-        // window.addEventListener("scroll", onScroll);
-        // return () => window.removeEventListener("scroll", onScroll);
-
         getCharacters(selectedPagination * 30, 30);
         window.scrollTo(0, 0);
-
     }, [selectedPagination]);
-
-    useEffect(() => {
-        //first request
-        getCharacters(0, 30);
-    }, []);
 
     useEffect(() => {
         if (!filterActive) {
