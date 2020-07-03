@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 //scenes
 import Home from "./scenes/Home";
@@ -16,7 +17,8 @@ function App() {
       {/* <Navbar /> */}
       <Router >
         <Switch>
-          <Route path="/" component={Home} exact />
+          <Redirect from="/" to={"/home/0"} exact />
+          <Route path="/home/:pageNumber" component={Home} exact />
           <Route path="/detail/:id" exact component={Detail} />
           <Route path="*" >
             <h1>Not Found!</h1>

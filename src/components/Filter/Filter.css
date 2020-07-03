@@ -11,9 +11,11 @@
   background-color: #c69090;
   box-shadow: 0px 6px 3px 0px #fab9b9;
   flex-wrap: wrap;
+
 }
 .hidden {
   height: 3.9rem;
+  transition: 0.4s;
 }
 
 .filter-option-list {

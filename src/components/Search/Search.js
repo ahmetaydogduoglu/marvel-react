@@ -5,22 +5,23 @@ import Input from "../Input"
 //local files
 import "./Search.css"
 
-function Search({ setFilterActive, onFilter, charactersLength }) {
-    const [name, setName] = useState("");
 
+function Search({ setFilterActive, onFilter, charactersLength, searchBoxObject }) {
+    const [searchText, setSearchText] = useState("");
     const inputConfig = {
         placeholder: "search character",
-        value: name,
+        value: searchText,
         name: "search",
         disabled: charactersLength === 0 ? true : false,
         onChange: e => {
-            setName(e.target.value);
-            if (name.trim().length > 2) {
+            searchBoxObject.setObservable(e.target.value);
+            setSearchText(e.target.value);
+            if (searchText.trim().length > 2) {
                 setFilterActive(true);
-                onFilter(name);
+                searchBoxObject.setFilterActive(true);
             }
-            if (name.trim().length < 2) {
-                setFilterActive(false);
+            if (searchText.trim().length < 2) {
+                searchBoxObject.setFilterActive(false);
             }
         }
     }

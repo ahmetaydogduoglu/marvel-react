@@ -13,7 +13,6 @@ function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
         <>
             <PaginationButton selectedPagination={selectedPagination} number={1} selectPage={selectPage} />
             {selectedPagination > 3 && <p className="pagination-indacator">...</p>}
-
             {
                 selectedPagination > 3 ? (
                     selectedPagination >= totalCount.length - 4 ? (

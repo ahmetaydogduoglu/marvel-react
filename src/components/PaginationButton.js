@@ -6,10 +6,10 @@ import "./PaginationButton.css"
 
 
 
-function PaginationButton({ number, selectPage }) {
+function PaginationButton({ number, selectPage, selectedPagination }) {
     return (
         <button
-            className="pagination-button"
+            className={selectedPagination !== number - 1 ? "pagination-button" : "pagination-button selected-pagination"}
             onClick={() => selectPage()}>
             {number.toString()}
         </button>
@@ -18,7 +18,8 @@ function PaginationButton({ number, selectPage }) {
 
 PaginationButton.propTypes = {
     number: PropsTypes.number.isRequired,
-    selectPage: PropsTypes.func.isRequired
+    selectPage: PropsTypes.func.isRequired,
+    selectedPagination: PropsTypes.number.isRequired
 }
 
 export default PaginationButton

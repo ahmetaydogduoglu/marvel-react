@@ -24,10 +24,8 @@ const sortTypes = [
 function Filter({ setSelectedFilerOption, selectedFilterOption }) {
     const [filterContentVisibility, setFilterContentVisibility] = useState(false);
     const onChange = (e) => {
-        console.log("saldjasldjlsajdlsajdlkas")
         setSelectedFilerOption(e.target.value);
     }
-    console.log(selectedFilterOption)
     return (
         <div className={filterContentVisibility ? "filter-container" : "filter-container hidden"}>
             <div className={"filter-title"}>
@@ -42,7 +40,7 @@ function Filter({ setSelectedFilerOption, selectedFilterOption }) {
             </div>
             {
                 filterContentVisibility && (
-                    sortTypes.map((item,i) => (
+                    sortTypes.map((item, i) => (
                         <div className="filter-option-list" key={i}>
                             <input onChange={onChange} type="radio" id="vehicle1" name="vehicle1" value={item.value} />
                             <label>{item.label}</label>

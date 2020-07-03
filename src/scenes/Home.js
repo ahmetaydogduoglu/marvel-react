@@ -1,6 +1,6 @@
 //global
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 //local folder
 import "./Home.css";
 //components
@@ -13,40 +13,41 @@ import Filter from "../components/Filter/Filter"
 import Search from "../components/Search/Search"
 //services
 import { getCharactersList } from "../services/getCharacters";
-
+//observers
+import SearchBoxListener from "../observers/SearchBoxListen";
 
 const paginationButtonCreate = (totalCount) => {
     let paginationNumbers = [];
-    console.log(totalCount);
+
     for (let i = 0; i < totalCount / 40; i++) {
         paginationNumbers = [...paginationNumbers, i];
     }
     return paginationNumbers;
 }
 
+const searchBoxListener = new SearchBoxListener("");
 
 function Home() {
-
     //state
     const [characters, setCharacters] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filterActive, setFilterActive] = useState(false);
     const [flterResult, setFilterResult] = useState([]);
     const [totalCount, setTotalCount] = useState([]);
-    const [selectedPagination, setSelectedPagintaion] = useState(0);
     const [selectedFilterOption, setSelectedFilterOption] = useState("name");
-    //navigaiton
+    const [searchText, setSearchText] = useState("");
+    //router
     const history = useHistory();
+    const params = useParams();
 
     //Ref
     const scrollRef = useRef(null);
-    console.log("Filter Option :", selectedFilterOption)
+
     //api call 
     const getCharacters = (offset, limit, sortType, nameStartsWith = null) => {
         setLoading(true);
         //call get character
-        console.log("type:", sortType)
-        const nameParams = nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : ""
+        const nameParams = nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : "";
         const orderBy = "&orderBy=" + sortType;
         const params = `&limit=${limit}&offset=${offset}${nameParams}${orderBy}`;
         getCharactersList(params).then(content => {
@@ -83,45 +84,44 @@ function Home() {
         history.push(`/detail/${characterId}`);
     }
 
-
-
     // useEffect(() => {
+    //     function callGetChatactesr() {
+    //         const pageNumber = parseInt(params.pageNumber) - 1;
+    //         setSelectedPagintaion(pageNumber);
+    //         getCharacters(pageNumber * 30, 30, selectedFilterOption);
+    //         window.scrollTo(0, 0);
+    //     }
 
-    //     //page bottom request
-    //     // const onScroll = e => {
-    //     //     if (e.target.documentElement.scrollTop + e.target.documentElement.offsetHeight > e.target.documentElement.scrollHeight / 2) {
-    //     //         if (characters.length - (30 * (selectedPage)) === 0 && !loading && selectedPage !== 5) {
-    //     //             console.log(characters.length - (30 * (selectedPage)));
-    //     //             getCharacters(30 * (selectedPage), 30);
-    //     //         }
-    //     //     }
-    //     // };
-    //     // window.addEventListener("scroll", onScroll);
-    //     // return () => window.removeEventListener("scroll", onScroll);
-    //     console.log("2.")
-    //     getCharacters(selectedPagination * 30, 30);
+    //     callGetChatactesr();
+    // }, [selectedPagination, selectedFilterOption]);
 
-    // }, [selectedPagination]);
+    const paginationChange = (number) => {
+        history.push(`/home/${number}`);
+    }
 
     useEffect(() => {
-        function callGetChatactesr(){
-          
-            getCharacters(selectedPagination * 30, 30, selectedFilterOption);
+        function callGetCharacters() {
+            const pageNumber = parseInt(params.pageNumber);
+            getCharacters(pageNumber * 30, 30, selectedFilterOption);
             window.scrollTo(0, 0);
         }
-        callGetChatactesr();
-    }, [selectedPagination, selectedFilterOption]);
+        callGetCharacters();
+    }, [params.pageNumber])
 
     useEffect(() => {
-        if (!filterActive) {
-            setFilterResult([]);
-        }
-    }, [filterActive])
+        console.log(searchBoxListener.getFilterActive())
+    }, [searchBoxListener.filterAvtive])
 
+    //components props
     const searchConfig = {
         setFilterActive: setFilterActive,
-        onFilter: filterInCharacterName,
-        charactersLength: characters.length
+        charactersLength: characters.length,
+        searchBoxObject: searchBoxListener
+    }
+
+    const filerConfig = {
+        setSelectedFilerOption: setSelectedFilterOption,
+        selectedFilterOption: selectedFilterOption
     }
 
     return (
@@ -131,7 +131,7 @@ function Home() {
             <div className="container">
                 <div className="list-container">
                     <Search  {...searchConfig} />
-                    <Filter setSelectedFilerOption={setSelectedFilterOption} selectedFilterOption={selectedFilterOption} />
+                    <Filter {...filerConfig} />
                     {
                         loading ? <Loading message="Characters " /> :
                             (
@@ -149,8 +149,8 @@ function Home() {
                                         <div className="paginaiton-contaiener">
                                             <PaginationMapping
                                                 totalCount={totalCount}
-                                                selectedPagination={selectedPagination}
-                                                setSelectedPagintaion={setSelectedPagintaion} />
+                                                selectedPagination={parseInt(params.pageNumber)}
+                                                setSelectedPagintaion={paginationChange} />
                                         </div>
                                     )}
                                 </div>
