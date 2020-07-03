@@ -1,25 +1,17 @@
-class SearchListen {
+class Observer {
 
-    constructor(text) {
-        this.textObservable = text;
-        this.filterAvtive = false;
+    constructor() {
+        this.observer = ""
     }
 
-    setObservable(v) {
-        this.textObservable = v;
+    setObserver(value) {
+        this.observer = value;
     }
-    setFilterActive(v) {
-        console.log("value:", v)
-        this.filterAvtive = v;
-    }
-    getFilterActive() {
-        return this.filterAvtive;
-    }
-    getTextObservable() {
-        return this.textObservable;
+
+    onChangeListen() {
+        return this.observer;
     }
 
 }
 
-
-export default SearchListen;
+export default Observer

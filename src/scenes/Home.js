@@ -15,6 +15,8 @@ import Search from "../components/Search/Search"
 import { getCharactersList } from "../services/getCharacters";
 //observers
 import SearchBoxListener from "../observers/SearchBoxListen";
+//utils 
+import { smallToBig, bigToSmall, dateBigToSmall, dateSmallToBig } from "../utils/sort"
 
 const paginationButtonCreate = (totalCount) => {
     let paginationNumbers = [];
@@ -25,7 +27,7 @@ const paginationButtonCreate = (totalCount) => {
     return paginationNumbers;
 }
 
-const searchBoxListener = new SearchBoxListener("");
+const observerSearch = new SearchBoxListener();
 
 function Home() {
     //state
@@ -34,8 +36,7 @@ function Home() {
     const [filterActive, setFilterActive] = useState(false);
     const [flterResult, setFilterResult] = useState([]);
     const [totalCount, setTotalCount] = useState([]);
-    const [selectedFilterOption, setSelectedFilterOption] = useState("name");
-    const [searchText, setSearchText] = useState("");
+    const [selectedFilterOption, setSelectedFilterOption] = useState(0);
     //router
     const history = useHistory();
     const params = useParams();
@@ -48,14 +49,14 @@ function Home() {
         setLoading(true);
         //call get character
         const nameParams = nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : "";
-        const orderBy = "&orderBy=" + sortType;
-        const params = `&limit=${limit}&offset=${offset}${nameParams}${orderBy}`;
+        const params = `&limit=${limit}&offset=${offset}${nameParams}`;
         getCharactersList(params).then(content => {
+            const sortResult = sorting(content.data.results, selectedFilterOption)
             if (nameStartsWith !== null) {
-                setFilterResult(content.data.results);
+                setFilterResult(sortResult);
             } else {
-                setCharacters(content.data.results);
-                setTotalCount(paginationButtonCreate(content.data.total))
+                setCharacters(sortResult);
+                setTotalCount(paginationButtonCreate(content.data.total));
             }
             setLoading(false);
         }).catch(error => {
@@ -64,40 +65,16 @@ function Home() {
     }
 
 
-    //filter
-    const filterInCharacterName = (name) => {
-        let tempChatactersList = []
-        characters.forEach(item => {
-            if (item.name.toLowerCase().startsWith(name)) {
-                tempChatactersList = tempChatactersList.concat(item)
-            }
-        })
-        if (tempChatactersList.length > 0) {
-            setFilterResult(tempChatactersList);
-        } else {
-            getCharacters(0, 50, "name", name);
-        }
-    }
-
     //view detail character with id 
     const redirectDetail = (characterId) => {
         history.push(`/detail/${characterId}`);
     }
 
-    // useEffect(() => {
-    //     function callGetChatactesr() {
-    //         const pageNumber = parseInt(params.pageNumber) - 1;
-    //         setSelectedPagintaion(pageNumber);
-    //         getCharacters(pageNumber * 30, 30, selectedFilterOption);
-    //         window.scrollTo(0, 0);
-    //     }
-
-    //     callGetChatactesr();
-    // }, [selectedPagination, selectedFilterOption]);
-
+    //pagination change
     const paginationChange = (number) => {
         history.push(`/home/${number}`);
     }
+
 
     useEffect(() => {
         function callGetCharacters() {
@@ -106,23 +83,45 @@ function Home() {
             window.scrollTo(0, 0);
         }
         callGetCharacters();
+        return () => 0
     }, [params.pageNumber])
 
-    useEffect(() => {
-        console.log(searchBoxListener.getFilterActive())
-    }, [searchBoxListener.filterAvtive])
+    const sorting = (data, selectedFilterOption) => {
+        let result = []
+        console.log(selectedFilterOption)
+        if (selectedFilterOption === 0) {
+            result = smallToBig(data);
 
+        } else if (selectedFilterOption === 1) {
+            result = bigToSmall(data);
+
+        } else if (selectedFilterOption === 2) {
+
+            result = dateBigToSmall(data);
+        } else {
+            result = dateSmallToBig(data);
+        }
+        return result;
+    }
+
+    useEffect(() => {
+        if(characters.length !== 0 ){
+            const updateCharacter= [...characters]
+            setCharacters(sorting(updateCharacter, selectedFilterOption))
+        }
+    }, [selectedFilterOption])
+
+    console.log(characters[0]);
     //components props
     const searchConfig = {
-        setFilterActive: setFilterActive,
         charactersLength: characters.length,
-        searchBoxObject: searchBoxListener
+        observer: observerSearch
     }
 
-    const filerConfig = {
+    const filterConfig = {
         setSelectedFilerOption: setSelectedFilterOption,
-        selectedFilterOption: selectedFilterOption
     }
+
 
     return (
         <>
@@ -131,7 +130,7 @@ function Home() {
             <div className="container">
                 <div className="list-container">
                     <Search  {...searchConfig} />
-                    <Filter {...filerConfig} />
+                    <Filter {...filterConfig} />
                     {
                         loading ? <Loading message="Characters " /> :
                             (

@@ -6,25 +6,25 @@ import "./Filter.css"
 const sortTypes = [
     {
         label: " Name",
-        value: "name"
+        value: 0
     },
     {
         label: "- Name",
-        value: "-name"
+        value: 1
     },
     {
         label: "Modifed",
-        value: "modified"
+        value: 2
     },
     {
         label: "- Modifed",
-        value: "-modified"
+        value: 3
     },
 ]
-function Filter({ setSelectedFilerOption, selectedFilterOption }) {
+function Filter({ setSelectedFilerOption }) {
     const [filterContentVisibility, setFilterContentVisibility] = useState(false);
     const onChange = (e) => {
-        setSelectedFilerOption(e.target.value);
+        setSelectedFilerOption(parseInt(e.target.value));
     }
     return (
         <div className={filterContentVisibility ? "filter-container" : "filter-container hidden"}>

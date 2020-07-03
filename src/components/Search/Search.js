@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaSearch } from 'react-icons/fa';
 //componenst
 import Input from "../Input"
@@ -6,25 +6,22 @@ import Input from "../Input"
 import "./Search.css"
 
 
-function Search({ setFilterActive, onFilter, charactersLength, searchBoxObject }) {
+function Search({ charactersLength, observer }) {
     const [searchText, setSearchText] = useState("");
+    useEffect(() => {
+        observer.setObserver(searchText);
+    }, [searchText])
     const inputConfig = {
         placeholder: "search character",
         value: searchText,
         name: "search",
         disabled: charactersLength === 0 ? true : false,
         onChange: e => {
-            searchBoxObject.setObservable(e.target.value);
+
             setSearchText(e.target.value);
-            if (searchText.trim().length > 2) {
-                setFilterActive(true);
-                searchBoxObject.setFilterActive(true);
-            }
-            if (searchText.trim().length < 2) {
-                searchBoxObject.setFilterActive(false);
-            }
         }
     }
+
     return (
         <div className="search-form">
             <div className="search-form-input-container">
