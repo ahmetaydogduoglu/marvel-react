@@ -14,8 +14,8 @@ import Search from "../components/Search/Search"
 //services
 import { getCharactersList } from "../services/getCharacters";
 //observers
-import { searchBoxListen } from "../observers/SearchBoxListen";
-//utils 
+import SearchBoxListen from "../observers/SearchBoxListen";
+//utils
 import { smallToBig, bigToSmall, dateBigToSmall, dateSmallToBig } from "../utils/sort"
 
 const paginationButtonCreate = (totalCount) => {
@@ -27,6 +27,7 @@ const paginationButtonCreate = (totalCount) => {
     return paginationNumbers;
 }
 
+const searchListen = new SearchBoxListen();
 
 function Home() {
     //state
@@ -44,14 +45,13 @@ function Home() {
     //Ref
     const scrollRef = useRef(null);
 
-    //api call 
+    //api call
     const getCharacters = (offset, limit, nameStartsWith = null) => {
         setLoading(true);
         //call get character
         const nameParams = nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : "";
         const params = `&limit=${limit}&offset=${offset}${nameParams}`;
         getCharactersList(params).then(content => {
-            console.log("data", content)
             const sortResult = sorting(content.data.results, selectedFilterOption);
             if (nameStartsWith !== null) {
                 setFilterResult(sortResult);
@@ -66,7 +66,7 @@ function Home() {
     }
 
 
-    //view detail character with id 
+    //view detail character with id
     const redirectDetail = (characterId) => {
         history.push(`/detail/${characterId}`);
     }
@@ -103,15 +103,9 @@ function Home() {
         callGetCharacters();
     }, [params.pageNumber])
 
-    useEffect(() => {
-        let searchService;
-        searchService = searchBoxListen.getMessage().subscribe(searchValue => {
-            setSearchBox(searchValue.text);
-        })
-        return () => {
-            searchService.unsubscribe();
-        }
-    }, [])
+
+
+
 
     useEffect(() => {
         if (characters.length !== 0) {
@@ -119,6 +113,16 @@ function Home() {
             setCharacters(sorting(updateCharacter, selectedFilterOption))
         }
     }, [selectedFilterOption])
+
+    const setSearch = (value) => setSearchBox(value.text);
+
+    useEffect(() => {
+        const searchSubscribe = searchListen.searchTextChangeListen().subscribe(setSearch)
+        return () => {
+            searchSubscribe.unsubscribe();
+        }
+    }, [])
+
 
     useEffect(() => {
         if (searchBox.length > 0) {
@@ -139,6 +143,7 @@ function Home() {
     //components props
     const searchConfig = {
         charactersLength: characters.length,
+        searchTextSet: searchListen
     }
 
     const filterConfig = {
@@ -155,6 +160,7 @@ function Home() {
                 <div className="list-container">
                     <Search  {...searchConfig} />
                     <Filter {...filterConfig} />
+
                     {
                         loading ? <Loading message="Characters " /> :
                             characters.length === 0 ? <p>No Characters.</p> :
@@ -173,7 +179,7 @@ function Home() {
                                     </div>
                                 )
                     }
-                    {totalCount !== 0 ? (
+                    {totalCount !== 0 && !filterActive ? (
                         <div className="paginaiton-contaiener">
                             <PaginationMapping
                                 totalCount={totalCount}

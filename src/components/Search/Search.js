@@ -5,10 +5,9 @@ import Input from "../Input"
 //local files
 import "./Search.css"
 //observer 
-import { searchBoxListen } from "../../observers/SearchBoxListen"
 
 
-function Search({ charactersLength }) {
+function Search({ charactersLength, searchTextSet }) {
     const [searchText, setSearchText] = useState("");
 
     const inputConfig = {
@@ -17,7 +16,7 @@ function Search({ charactersLength }) {
         name: "search",
         disabled: charactersLength === 0 ? true : false,
         onChange: e => {
-            searchBoxListen.sendMessage(e.target.value);
+            searchTextSet.setSearchText(e.target.value)
             setSearchText(e.target.value);
         }
     }
