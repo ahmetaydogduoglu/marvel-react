@@ -23,7 +23,6 @@ export default function Detail() {
         getCharacterDetail(id)
             .then(content => {
                 setCharacter(content.data.results[0]);
-                console.log(content.data.results[0]);
                 //call get charater comics
                 return getCharacterComics(id, "2005-01-01,2020-05-06", 15);
             }).then(comics => {
@@ -43,34 +42,31 @@ export default function Detail() {
     return (
         <>
             <Navbar backButtonVisibility={true} backAction={goBack} />
-
             <div className={"detail-container"}>
-                <div className={"detail-content"}>
-                    {
-                        character === null ? <Loading message="Character " /> : (
-                            <>
-                                <h2>{character.name}</h2>
-                                <div className={"character-detail-card"}>
-                                    <img src={`${character.thumbnail.path}/portrait_fantastic.jpg`} alt="Girl in a jacket" width="40%" height="100%"></img>
-                                    <div style={{ width: "65%", height: "100%", padding: ".5rem" }}>
-                                        <h4>Character Descrtiption</h4>
-                                        <p style={{ color: "#fff" }}>
-                                            {character.description.length > 0 ? character.description : "No Description."}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className={"comics-list-detail"}>
-                                    <h3>Comics</h3>
-                                    {
-                                        comics === null ? (<Loading message="Comics " />) : (
-                                            <ComicsMap data={comics} />
-                                        )
-                                    }
-                                </div>
-                            </>
-                        )
-                    }
-                </div>
+                {character === null ? <Loading message="Character " /> : (
+                    <div className={"detail-content"}>
+                        {/* <h2>{character.name}</h2> */}
+                        <div className={"character-detail-card"}>
+                            <img src={`${character.thumbnail.path}/portrait_fantastic.jpg`} alt="Girl in a jacket" width="50%" height="100%"></img>
+                            <div style={{ width: "50%", height: "100%", padding: ".5rem" }}>
+                                <h4>Character Descrtiption</h4>
+                                <p style={{ color: "#fff" }}>
+                                    {character.description.length > 0 ? character.description : "No Description."}
+                                </p>
+                            </div>
+                        </div>
+                        <div className={"comics-list-detail"}>
+                            <h3>Comics</h3>
+                            {
+                                comics === null ? (<Loading message="Comics " />) : (
+                                    <ComicsMap data={comics} />
+                                )
+                            }
+                        </div>
+
+
+                    </div>
+                )}
             </div>
         </>
 

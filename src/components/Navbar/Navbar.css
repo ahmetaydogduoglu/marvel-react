@@ -11,15 +11,13 @@
 .nav-button {
   background-color: transparent;
   border-width: 0px;
-  margin-left: 15px;
   margin-right: 15px;
 }
 .logo {
   margin-right: 15px;
 }
 .hidden-box {
-  width: 1.9em;
+  width: 1.9rem;
   height: 2px;
-  margin-left: 40px;
   margin-right: 15px;
 }

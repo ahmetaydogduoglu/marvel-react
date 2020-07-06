@@ -9,7 +9,7 @@ function PaginationMapping({ data, selectedPagination,setSelectedPagintaion }) {
         <PaginationButton
             key={i}
             selectedPagination={selectedPagination}
-            number={item + 1} selectPage={() => setSelectedPagintaion(item)} />
+            number={item + 1} selectPage={() => setSelectedPagintaion(item+1)} />
     ))
 }
 

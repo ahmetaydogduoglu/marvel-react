@@ -1,10 +1,11 @@
 .detail-container {
   background-color: white;
-  height: 100vh;
+  height: 91vh;
   width: 100%;
   align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 .detail-header {
   width: 100%;
@@ -28,8 +29,9 @@
 .detail-content {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 }
 .detail-content h2 {
   color: #db2b2b;
@@ -40,10 +42,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20rem;
-  width: 35rem;
+  height: 91vh;
+  width: 60%;
   background-color: black;
-  border-radius: 15px;
   overflow: hidden;
 }
 .character-detail-card p {
@@ -56,19 +57,29 @@
 .comics-list-detail {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 35rem;
+  align-items: center;
+  width: 40%;
+  background-color: #db2b2b;
+  height: 91vh;
 }
-
+.comics-list-detail h3 {
+  font-size: 25px;
+  background-color: #db2b2b;
+  padding: 7px;
+  border-radius: 5px;
+}
+.comics-list-detail ul {
+  align-self: flex-start;
+}
 @media screen and (max-width: 992px) {
   .comics-list-detail {
-    width: 20rem;
+    width: 100%;
   }
   .character-detail-card {
-    width: 21rem;
+    width: 100%;
   }
   .detail-content h2 {
-    font-size: 2rem;
+    font-size: 1.1rem;
   }
   .detail-header h1 {
     font-size: 1.4rem;

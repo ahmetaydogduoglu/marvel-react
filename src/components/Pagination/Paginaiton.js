@@ -8,7 +8,7 @@ import "./Pagination.css"
 import PaginationMapping from "../Lists/PaginationMapping"
 
 function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
-    const selectPage = () => setSelectedPagintaion(0);
+    const selectPage = () => setSelectedPagintaion(1);
     return (
         <>
             <PaginationButton selectedPagination={selectedPagination} number={1} selectPage={selectPage} />

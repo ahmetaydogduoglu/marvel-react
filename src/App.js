@@ -17,7 +17,7 @@ function App() {
       {/* <Navbar /> */}
       <Router >
         <Switch>
-          <Redirect from="/" to={"/home/0"} exact />
+          <Redirect from="/" to={"/home/1"} exact />
           <Route path="/home/:pageNumber" component={Home} exact />
           <Route path="/detail/:id" exact component={Detail} />
           <Route path="*" >

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "dotenv": "^8.2.0",
     "md5": "^2.2.1",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",

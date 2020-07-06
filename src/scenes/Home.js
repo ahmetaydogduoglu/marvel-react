@@ -1,6 +1,6 @@
 //global
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 //local folder
 import "./Home.css";
 //components
@@ -34,14 +34,14 @@ function Home() {
     const [characters, setCharacters] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filterActive, setFilterActive] = useState(false);
-    const [flterResult, setFilterResult] = useState([]);
+    const [filterResult, setFilterResult] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [selectedFilterOption, setSelectedFilterOption] = useState(0);
     const [searchBox, setSearchBox] = useState("");
     //router
     const history = useHistory();
     const params = useParams();
-
+    const locaiton = useLocation();
     //Ref
     const scrollRef = useRef(null);
 
@@ -53,7 +53,12 @@ function Home() {
         const params = `&limit=${limit}&offset=${offset}${nameParams}`;
         getCharactersList(params).then(content => {
             const sortResult = sorting(content.data.results, selectedFilterOption);
-            if (nameStartsWith !== null) {
+
+            //if page number biggest from totalCount
+            if (!filterActive && content.data.count === 0) {
+                paginationChange(1);
+            }
+            else if (nameStartsWith !== null) {
                 setFilterResult(sortResult);
             } else {
                 setCharacters(sortResult);
@@ -96,21 +101,26 @@ function Home() {
 
     useEffect(() => {
         function callGetCharacters() {
-            const pageNumber = parseInt(params.pageNumber);
-            getCharacters(pageNumber * 30, 30);
-            window.scrollTo(0, 0);
+            let pageNumber = parseInt(params.pageNumber);
+            if (pageNumber < 1) {
+                paginationChange(1);
+            } else {
+                pageNumber -= 1
+                getCharacters(pageNumber * 30, 30);
+                window.scrollTo(0, 0);
+            }
         }
         callGetCharacters();
     }, [params.pageNumber])
 
 
-
-
-
     useEffect(() => {
-        if (characters.length !== 0) {
-            const updateCharacter = [...characters]
-            setCharacters(sorting(updateCharacter, selectedFilterOption))
+        if (characters.length !== 0 && !filterActive) {
+            const updateCharacter = [...characters];
+            setCharacters(sorting(updateCharacter, selectedFilterOption));
+        }else if (filterActive){
+            const updateCharacterSearch = [...filterResult];
+            setFilterResult(sorting(updateCharacterSearch,selectedFilterOption));
         }
     }, [selectedFilterOption])
 
@@ -149,6 +159,7 @@ function Home() {
     const filterConfig = {
         charactersLength: characters.length,
         setSelectedFilerOption: setSelectedFilterOption,
+        selectedOption: selectedFilterOption
     }
 
 
@@ -160,33 +171,36 @@ function Home() {
                 <div className="list-container">
                     <Search  {...searchConfig} />
                     <Filter {...filterConfig} />
-
                     {
                         loading ? <Loading message="Characters " /> :
-                            characters.length === 0 ? <p>No Characters.</p> :
-                                (
-                                    <div className="character-list-row" ref={scrollRef}>
-                                        {/*characters mapping*/}
-                                        <CharactersMapping
-                                            data={
-                                                filterActive ?
-                                                    flterResult
-                                                    : characters
-                                            }
-                                            redirectDetail={redirectDetail}
-                                        />
+                            <>
+                                {
+                                    characters.length === 0 ? <p>No Characters.</p> :
+                                        (
+                                            <div className="character-list-row" ref={scrollRef}>
+                                                {/*characters mapping*/}
+                                                <CharactersMapping
+                                                    data={
+                                                        filterActive ?
+                                                            filterResult
+                                                            : characters
+                                                    }
+                                                    redirectDetail={redirectDetail}
+                                                />
 
+                                            </div>
+                                        )
+                                }
+                                {totalCount !== 0 && !filterActive ? (
+                                    <div className="paginaiton-contaiener">
+                                        <PaginationMapping
+                                            totalCount={totalCount}
+                                            selectedPagination={parseInt(params.pageNumber)}
+                                            setSelectedPagintaion={paginationChange} />
                                     </div>
-                                )
+                                ) : null}
+                            </>
                     }
-                    {totalCount !== 0 && !filterActive ? (
-                        <div className="paginaiton-contaiener">
-                            <PaginationMapping
-                                totalCount={totalCount}
-                                selectedPagination={parseInt(params.pageNumber)}
-                                setSelectedPagintaion={paginationChange} />
-                        </div>
-                    ) : null}
                 </div>
             </div>
         </>

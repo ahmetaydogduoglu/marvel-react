@@ -11,7 +11,7 @@ function CharacterCard({ content, handleClick }) {
             <div
                 onClick={() => handleClick(content.id)}
                 className="card-container">
-                <img src={`${content.thumbnail.path}/portrait_fantastic.jpg`} alt="marvel" width="100%" height="70%"></img>
+                <img src={`${content.thumbnail.path}/portrait_incredible.jpg`} alt="marvel" width="100%" height="70%"></img>
                 <div className="card-subContainer">
                     <h3>{content.name}</h3>
                 </div>

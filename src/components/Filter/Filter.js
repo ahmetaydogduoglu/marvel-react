@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import PropTypes from "prop-types"
-// import PropTypes from 'prop-types'
+//local
 import "./Filter.css"
+import FilterCheckBox from "./FilterCheckBox"
 const sortTypes = [
     {
         label: " Name",
@@ -21,7 +22,7 @@ const sortTypes = [
         value: 3
     },
 ]
-function Filter({ setSelectedFilerOption, charactersLength }) {
+function Filter({ setSelectedFilerOption, charactersLength, selectedOption }) {
     const [filterContentVisibility, setFilterContentVisibility] = useState(false);
     const onChange = (e) => {
         setSelectedFilerOption(parseInt(e.target.value));
@@ -40,23 +41,20 @@ function Filter({ setSelectedFilerOption, charactersLength }) {
                     }
                 </button>
             </div>
-            {
-                filterContentVisibility && (
-                    sortTypes.map((item, i) => (
-                        <div className="filter-option-list" key={i}>
-                            <input onChange={onChange} type="radio" id="vehicle1" name="vehicle1" value={item.value} />
-                            <label>{item.label}</label>
-                        </div>
-                    ))
-                )
+            {filterContentVisibility && (
+                sortTypes.map(item => (
+                    <FilterCheckBox name={item.label} onChange={onChange} selectedOption={selectedOption} value={item.value} />
+                ))
+            )}
 
-            }
         </div >
     )
 }
 
 Filter.propTypes = {
-    setSelectedFilerOption: PropTypes.func.isRequired
+    setSelectedFilerOption: PropTypes.func.isRequired,
+    selectedOption: PropTypes.number.isRequired,
+    charactersLength: PropTypes.number.isRequired,
 }
 
 export default Filter
