@@ -19,7 +19,6 @@ import { Subject } from 'rxjs';
 
 const subject = new Subject();
 
-
 export const searchBoxListen = {
     sendMessage: searchBox => subject.next({ text: searchBox }),
     clearMessages: () => subject.next(),

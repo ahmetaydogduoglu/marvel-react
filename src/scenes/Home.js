@@ -34,7 +34,7 @@ function Home() {
     const [loading, setLoading] = useState(false);
     const [filterActive, setFilterActive] = useState(false);
     const [flterResult, setFilterResult] = useState([]);
-    const [totalCount, setTotalCount] = useState([]);
+    const [totalCount, setTotalCount] = useState(0);
     const [selectedFilterOption, setSelectedFilterOption] = useState(0);
     const [searchBox, setSearchBox] = useState("");
     //router
@@ -101,7 +101,6 @@ function Home() {
             window.scrollTo(0, 0);
         }
         callGetCharacters();
-        return () => 0
     }, [params.pageNumber])
 
     useEffect(() => {
@@ -113,8 +112,6 @@ function Home() {
             searchService.unsubscribe();
         }
     }, [])
-
-
 
     useEffect(() => {
         if (characters.length !== 0) {
@@ -172,17 +169,18 @@ function Home() {
                                             }
                                             redirectDetail={redirectDetail}
                                         />
-                                        {!filterActive & !loading && (
-                                            <div className="paginaiton-contaiener">
-                                                <PaginationMapping
-                                                    totalCount={totalCount}
-                                                    selectedPagination={parseInt(params.pageNumber)}
-                                                    setSelectedPagintaion={paginationChange} />
-                                            </div>
-                                        )}
+
                                     </div>
                                 )
                     }
+                    {totalCount !== 0 ? (
+                        <div className="paginaiton-contaiener">
+                            <PaginationMapping
+                                totalCount={totalCount}
+                                selectedPagination={parseInt(params.pageNumber)}
+                                setSelectedPagintaion={paginationChange} />
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </>
