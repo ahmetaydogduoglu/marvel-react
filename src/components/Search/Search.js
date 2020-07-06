@@ -4,20 +4,20 @@ import { FaSearch } from 'react-icons/fa';
 import Input from "../Input"
 //local files
 import "./Search.css"
+//observer 
+import { searchBoxListen } from "../../observers/SearchBoxListen"
 
 
-function Search({ charactersLength, observer }) {
+function Search({ charactersLength }) {
     const [searchText, setSearchText] = useState("");
-    useEffect(() => {
-        observer.setObserver(searchText);
-    }, [searchText])
+
     const inputConfig = {
         placeholder: "search character",
         value: searchText,
         name: "search",
         disabled: charactersLength === 0 ? true : false,
         onChange: e => {
-
+            searchBoxListen.sendMessage(e.target.value);
             setSearchText(e.target.value);
         }
     }

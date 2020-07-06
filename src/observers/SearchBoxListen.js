@@ -1,17 +1,27 @@
-class Observer {
+// class Observer {
 
-    constructor() {
-        this.observer = ""
-    }
+//     _searchBox = ""
 
-    setObserver(value) {
-        this.observer = value;
-    }
+//     attach(value) {
+//         console.log("value", value);
+//         this._searchBox = value;
+//     }
 
-    onChangeListen() {
-        return this.observer;
-    }
+//     notify() {
+//         return this._searchBox
+//     }
 
-}
+// }
 
-export default Observer
+// export default Observer
+
+import { Subject } from 'rxjs';
+
+const subject = new Subject();
+
+
+export const searchBoxListen = {
+    sendMessage: searchBox => subject.next({ text: searchBox }),
+    clearMessages: () => subject.next(),
+    getMessage: () => subject.asObservable()
+};

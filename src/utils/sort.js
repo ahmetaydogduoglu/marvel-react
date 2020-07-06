@@ -8,7 +8,6 @@ export function bigToSmall(data) {
         }
         return 0;
     })
-    console.log("second:",result)
     return result
 
 }
@@ -23,8 +22,6 @@ export function smallToBig(data) {
         }
         return 0;
     })
-    console.log("first:",result)
-
     return result
 
 }
