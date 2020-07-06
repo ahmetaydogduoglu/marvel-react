@@ -21,7 +21,7 @@ import { smallToBig, bigToSmall, dateBigToSmall, dateSmallToBig } from "../utils
 const paginationButtonCreate = (totalCount) => {
     let paginationNumbers = [];
 
-    for (let i = 0; i < totalCount / 40; i++) {
+    for (let i = 0; i < totalCount / 30; i++) {
         paginationNumbers = [...paginationNumbers, i];
     }
     return paginationNumbers;
@@ -51,7 +51,8 @@ function Home() {
         const nameParams = nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : "";
         const params = `&limit=${limit}&offset=${offset}${nameParams}`;
         getCharactersList(params).then(content => {
-            const sortResult = sorting(content.data.results, selectedFilterOption)
+            const sortResult = sorting(content.data.results, selectedFilterOption);
+            console.log(content.data);
             if (nameStartsWith !== null) {
                 setFilterResult(sortResult);
             } else {
@@ -76,15 +77,7 @@ function Home() {
     }
 
 
-    useEffect(() => {
-        function callGetCharacters() {
-            const pageNumber = parseInt(params.pageNumber);
-            getCharacters(pageNumber * 30, 30, selectedFilterOption);
-            window.scrollTo(0, 0);
-        }
-        callGetCharacters();
-        return () => 0
-    }, [params.pageNumber])
+
 
     const sorting = (data, selectedFilterOption) => {
         let result = []
@@ -104,14 +97,24 @@ function Home() {
         return result;
     }
 
+
     useEffect(() => {
-        if(characters.length !== 0 ){
-            const updateCharacter= [...characters]
+        function callGetCharacters() {
+            const pageNumber = parseInt(params.pageNumber);
+            getCharacters(pageNumber * 30, 30, selectedFilterOption);
+            window.scrollTo(0, 0);
+        }
+        callGetCharacters();
+        return () => 0
+    }, [params.pageNumber])
+
+    useEffect(() => {
+        if (characters.length !== 0) {
+            const updateCharacter = [...characters]
             setCharacters(sorting(updateCharacter, selectedFilterOption))
         }
     }, [selectedFilterOption])
 
-    console.log(characters[0]);
     //components props
     const searchConfig = {
         charactersLength: characters.length,
@@ -119,6 +122,7 @@ function Home() {
     }
 
     const filterConfig = {
+        charactersLength: characters.length,
         setSelectedFilerOption: setSelectedFilterOption,
     }
 
@@ -133,27 +137,28 @@ function Home() {
                     <Filter {...filterConfig} />
                     {
                         loading ? <Loading message="Characters " /> :
-                            (
-                                <div className="character-list-row" ref={scrollRef}>
-                                    {/*characters mapping*/}
-                                    <CharactersMapping
-                                        data={
-                                            filterActive ?
-                                                flterResult
-                                                : characters
-                                        }
-                                        redirectDetail={redirectDetail}
-                                    />
-                                    {!filterActive & !loading && (
-                                        <div className="paginaiton-contaiener">
-                                            <PaginationMapping
-                                                totalCount={totalCount}
-                                                selectedPagination={parseInt(params.pageNumber)}
-                                                setSelectedPagintaion={paginationChange} />
-                                        </div>
-                                    )}
-                                </div>
-                            )
+                            characters.length === 0 ? <p>No Characters.</p> :
+                                (
+                                    <div className="character-list-row" ref={scrollRef}>
+                                        {/*characters mapping*/}
+                                        <CharactersMapping
+                                            data={
+                                                filterActive ?
+                                                    flterResult
+                                                    : characters
+                                            }
+                                            redirectDetail={redirectDetail}
+                                        />
+                                        {!filterActive & !loading && (
+                                            <div className="paginaiton-contaiener">
+                                                <PaginationMapping
+                                                    totalCount={totalCount}
+                                                    selectedPagination={parseInt(params.pageNumber)}
+                                                    setSelectedPagintaion={paginationChange} />
+                                            </div>
+                                        )}
+                                    </div>
+                                )
                     }
                 </div>
             </div>

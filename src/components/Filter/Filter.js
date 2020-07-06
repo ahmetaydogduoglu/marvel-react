@@ -21,7 +21,7 @@ const sortTypes = [
         value: 3
     },
 ]
-function Filter({ setSelectedFilerOption }) {
+function Filter({ setSelectedFilerOption, charactersLength }) {
     const [filterContentVisibility, setFilterContentVisibility] = useState(false);
     const onChange = (e) => {
         setSelectedFilerOption(parseInt(e.target.value));
@@ -30,7 +30,9 @@ function Filter({ setSelectedFilerOption }) {
         <div className={filterContentVisibility ? "filter-container" : "filter-container hidden"}>
             <div className={"filter-title"}>
                 <p>Sort Type</p>
-                <button className={"filter-title-button"} onClick={() => setFilterContentVisibility(f => !f)}>
+                <button
+                    disabled={charactersLength === 0 ? true : false}
+                    className={"filter-title-button"} onClick={() => setFilterContentVisibility(f => !f)}>
                     {
                         !filterContentVisibility ? (
                             <FaChevronDown color="#921c1c" size={"2rem"} />
