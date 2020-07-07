@@ -24,7 +24,8 @@ export default function Detail() {
             .then(content => {
                 setCharacter(content.data.results[0]);
                 //call get charater comics
-                return getCharacterComics(id, "2005-01-01,2020-05-06", 15);
+                const comicsParams = `&dateRange=2005-01-01,2020-12-12&limit=${15}`
+                return getCharacterComics(id, comicsParams);
             }).then(comics => {
                 console.log(comics.data);
                 setComics(comics.data.results);
@@ -62,9 +63,12 @@ export default function Detail() {
                         </div>
                         <div className={"comics-list-detail"}>
                             <h3>Comics</h3>
-                            {comics === null ? <Loading message="Comics " />:   <div className="comics-list">
+
+                            {comics === null ? <Loading message="Comics " /> : <div className="comics-list">
                                 {
-                                    <ComicsMap data={comics} />
+                                    comics.length === 0 ?
+                                        <p>No Comics.</p> :
+                                        <ComicsMap data={comics} />
                                 }
                             </div>}
                         </div>

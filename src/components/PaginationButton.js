@@ -9,7 +9,7 @@ import "./PaginationButton.css"
 function PaginationButton({ number, selectPage, selectedPagination }) {
     return (
         <button
-            className={selectedPagination !== number - 1 ? "pagination-button" : "pagination-button selected-pagination"}
+            className={selectedPagination !== number ? "pagination-button" : "pagination-button selected-pagination"}
             onClick={() => selectPage()}>
             {number.toString()}
         </button>

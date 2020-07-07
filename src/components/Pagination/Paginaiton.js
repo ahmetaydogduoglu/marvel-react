@@ -9,29 +9,30 @@ import PaginationMapping from "../Lists/PaginationMapping"
 
 function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
     const selectPage = () => setSelectedPagintaion(1);
+    console.log(selectedPagination)
     return (
         <>
-            <PaginationButton selectedPagination={selectedPagination - 1} number={1} selectPage={selectPage} />
+            <PaginationButton selectedPagination={selectedPagination } number={1} selectPage={selectPage} />
             {selectedPagination > 3 && <p className="pagination-indacator">...</p>}
             {
                 selectedPagination > 3 ? (
                     selectedPagination >= totalCount.length - 4 ? (
                         <PaginationMapping
-                            selectedPagination={selectedPagination - 1}
-                            data={totalCount.slice(selectedPagination - 2, totalCount.length - 1)}
+                            selectedPagination={selectedPagination}
+                            data={totalCount.slice(selectedPagination - 3, totalCount.length-1)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />
 
                     ) : (
                             <PaginationMapping
-                                selectedPagination={selectedPagination - 1}
+                                selectedPagination={selectedPagination}
                                 data={totalCount.slice(selectedPagination - 3, selectedPagination + 2)}
                                 setSelectedPagintaion={setSelectedPagintaion} />
                         )
 
                 ) : (
                         <PaginationMapping
-                            selectedPagination={selectedPagination - 1}
+                            selectedPagination={selectedPagination }
                             data={totalCount.slice(1, 6)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />
@@ -41,7 +42,7 @@ function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
             <PaginationButton
                 selectedPagination={selectedPagination}
                 number={totalCount.length}
-                selectPage={() => setSelectedPagintaion(totalCount.length - 1)} />
+                selectPage={() => setSelectedPagintaion(totalCount.length)} />
         </>
     )
 }

@@ -140,7 +140,7 @@ function Home() {
         const searchBoxAction = () => {
             if (searchBox.length > 0) {
                 const findResult = characters.filter(item => item.name === searchBox)
-                if(searchBox.length > 3 ){
+                if (searchBox.length > 3) {
                     setFilterActive(true);
                     if (findResult.length === 0) {
                         getCharacters(0, 100, searchBox);
@@ -183,21 +183,21 @@ function Home() {
                             <>
                                 {
                                     characters.length === 0 ? <p>No Characters.</p> :
-                                    filterResult.length  === 0&& filterActive ?  <p>No Characters.</p>:
-                                        (
-                                            <div className="character-list-row" ref={scrollRef}>
-                                                {/*characters mapping*/}
-                                                <CharactersMapping
-                                                    data={
-                                                        filterActive ?
-                                                            filterResult
-                                                            : characters
-                                                    }
-                                                    redirectDetail={redirectDetail}
-                                                />
+                                        filterResult.length === 0 && filterActive ? <p>No Characters.</p> :
+                                            (
+                                                <div className="character-list-row" ref={scrollRef}>
+                                                    {/*characters mapping*/}
+                                                    <CharactersMapping
+                                                        data={
+                                                            filterActive ?
+                                                                filterResult
+                                                                : characters
+                                                        }
+                                                        redirectDetail={redirectDetail}
+                                                    />
 
-                                            </div>
-                                        )
+                                                </div>
+                                            )
                                 }
                                 {totalCount !== 0 && !filterActive ? (
                                     <div className="paginaiton-contaiener">

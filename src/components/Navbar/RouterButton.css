@@ -1,0 +1,13 @@
+.router-button {
+  width: 6rem;
+  height: 2rem;
+  margin-right: 15px;
+  background-color: transparent;
+  border-width: 0px 0px 3px 0px;
+  border-color: #fff;
+  color: #fff;
+}
+
+.router-button:hover {
+  border-color: red;
+}

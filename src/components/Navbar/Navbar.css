@@ -2,22 +2,37 @@
   width: 100%;
   display: flex;
   background-color: #202020;
-  height: 10vh;
+  height: 15vh;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
 }
-
+.title-container {
+  height: 9vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
 .nav-button {
   background-color: transparent;
   border-width: 0px;
   margin-right: 15px;
 }
+.router-container {
+  height: 6vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  overflow: hidden;
+}
 .logo {
   margin-right: 15px;
 }
 .hidden-box {
-  width: 1.9rem;
-  height: 2px;
-  margin-right: 15px;
-}
+  width: 2.9rem;
+  height: 2px;}

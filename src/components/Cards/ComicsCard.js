@@ -6,7 +6,7 @@ function ComicsCard({ content }) {
     return (
         <div className={"comics-card-container"}>
             <div className="image-container">
-                <img src={`${content.thumbnail.path}/standard_large.jpg`} alt="marvel"/>
+                <img src={`${content.thumbnail.path}/standard_large.jpg`} alt="marvel" />
             </div>
             <div className="comic-title-container">
                 <p>{content.title}</p>
