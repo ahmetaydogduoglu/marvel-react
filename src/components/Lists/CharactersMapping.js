@@ -2,7 +2,7 @@
 import React from 'react'
 import PropsTypes from "prop-types"
 //Components folders
-import Card from "../CharacterCard";
+import Card from "../cards/CharacterCard";
 function CharactersMapping({ data, redirectDetail }) {
     return (
         data.map(item => (

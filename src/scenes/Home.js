@@ -1,6 +1,6 @@
 //global
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 //local folder
 import "./Home.css";
 //components
@@ -41,7 +41,6 @@ function Home() {
     //router
     const history = useHistory();
     const params = useParams();
-    const locaiton = useLocation();
     //Ref
     const scrollRef = useRef(null);
 
@@ -115,13 +114,16 @@ function Home() {
 
 
     useEffect(() => {
-        if (characters.length !== 0 && !filterActive) {
-            const updateCharacter = [...characters];
-            setCharacters(sorting(updateCharacter, selectedFilterOption));
-        }else if (filterActive){
-            const updateCharacterSearch = [...filterResult];
-            setFilterResult(sorting(updateCharacterSearch,selectedFilterOption));
+        const filterOptionAction = () => {
+            if (characters.length !== 0 && !filterActive) {
+                const updateCharacter = [...characters];
+                setCharacters(sorting(updateCharacter, selectedFilterOption));
+            } else if (filterActive) {
+                const updateCharacterSearch = [...filterResult];
+                setFilterResult(sorting(updateCharacterSearch, selectedFilterOption));
+            }
         }
+        filterOptionAction();
     }, [selectedFilterOption])
 
     const setSearch = (value) => setSearchBox(value.text);
@@ -133,20 +135,25 @@ function Home() {
         }
     }, [])
 
-
+    //search
     useEffect(() => {
-        if (searchBox.length > 0) {
-            const findResult = characters.filter(item => item.name === searchBox)
-            setFilterActive(true);
-            if (findResult.length === 0) {
-                getCharacters(0, 100, searchBox);
-            } else {
-                setCharacters(findResult);
+        const searchBoxAction = () => {
+            if (searchBox.length > 0) {
+                const findResult = characters.filter(item => item.name === searchBox)
+                if(searchBox.length > 3 ){
+                    setFilterActive(true);
+                    if (findResult.length === 0) {
+                        getCharacters(0, 100, searchBox);
+                    } else {
+                        setCharacters(findResult);
+                    }
+                }
+            } else if (searchBox.length === 0) {
+                setFilterActive(false);
+                setFilterResult([])
             }
-        } else if (searchBox.length === 0) {
-            setFilterActive(false);
-            setFilterResult([])
         }
+        searchBoxAction();
     }, [searchBox])
 
 
@@ -176,6 +183,7 @@ function Home() {
                             <>
                                 {
                                     characters.length === 0 ? <p>No Characters.</p> :
+                                    filterResult.length  === 0&& filterActive ?  <p>No Characters.</p>:
                                         (
                                             <div className="character-list-row" ref={scrollRef}>
                                                 {/*characters mapping*/}

@@ -26,6 +26,7 @@ export default function Detail() {
                 //call get charater comics
                 return getCharacterComics(id, "2005-01-01,2020-05-06", 15);
             }).then(comics => {
+                console.log(comics.data);
                 setComics(comics.data.results);
             }).catch(error => {
                 alert(error);
@@ -47,8 +48,12 @@ export default function Detail() {
                     <div className={"detail-content"}>
                         {/* <h2>{character.name}</h2> */}
                         <div className={"character-detail-card"}>
-                            <img src={`${character.thumbnail.path}/portrait_fantastic.jpg`} alt="Girl in a jacket" width="50%" height="100%"></img>
-                            <div style={{ width: "50%", height: "100%", padding: ".5rem" }}>
+
+                            <div className="detail-image-container">
+                                <img src={`${character.thumbnail.path}/portrait_fantastic.jpg`} alt="Girl in a jacket"></img>
+                            </div>
+
+                            <div className="character-description-container">
                                 <h4>Character Descrtiption</h4>
                                 <p style={{ color: "#fff" }}>
                                     {character.description.length > 0 ? character.description : "No Description."}
@@ -57,14 +62,12 @@ export default function Detail() {
                         </div>
                         <div className={"comics-list-detail"}>
                             <h3>Comics</h3>
-                            {
-                                comics === null ? (<Loading message="Comics " />) : (
+                            {comics === null ? <Loading message="Comics " />:   <div className="comics-list">
+                                {
                                     <ComicsMap data={comics} />
-                                )
-                            }
+                                }
+                            </div>}
                         </div>
-
-
                     </div>
                 )}
             </div>

@@ -11,27 +11,27 @@ function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
     const selectPage = () => setSelectedPagintaion(1);
     return (
         <>
-            <PaginationButton selectedPagination={selectedPagination} number={1} selectPage={selectPage} />
+            <PaginationButton selectedPagination={selectedPagination - 1} number={1} selectPage={selectPage} />
             {selectedPagination > 3 && <p className="pagination-indacator">...</p>}
             {
                 selectedPagination > 3 ? (
                     selectedPagination >= totalCount.length - 4 ? (
                         <PaginationMapping
-                            selectedPagination={selectedPagination}
+                            selectedPagination={selectedPagination - 1}
                             data={totalCount.slice(selectedPagination - 2, totalCount.length - 1)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />
 
                     ) : (
                             <PaginationMapping
-                                selectedPagination={selectedPagination}
-                                data={totalCount.slice(selectedPagination - 2, selectedPagination + 3)}
+                                selectedPagination={selectedPagination - 1}
+                                data={totalCount.slice(selectedPagination - 3, selectedPagination + 2)}
                                 setSelectedPagintaion={setSelectedPagintaion} />
                         )
 
                 ) : (
                         <PaginationMapping
-                            selectedPagination={selectedPagination}
+                            selectedPagination={selectedPagination - 1}
                             data={totalCount.slice(1, 6)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />
