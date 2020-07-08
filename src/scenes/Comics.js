@@ -49,7 +49,6 @@ class Comics extends Component {
                             <Loading message="Comics " />
                         ) : (
                                 <div className="comics-list-container">
-
                                     <ComicsMapping data={this.state.comics} />
                                 </div>
                             )

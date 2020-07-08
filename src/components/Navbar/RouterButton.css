@@ -7,6 +7,8 @@
   border-width: 0px 0px 2px 0px;
   border-color: white;
   font-size: 15px;
+  width: 5rem;
+  text-align: center;
   transition: 0.1s;
 }
 

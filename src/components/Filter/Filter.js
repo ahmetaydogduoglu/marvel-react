@@ -4,6 +4,9 @@ import PropTypes from "prop-types"
 //local
 import "./Filter.css"
 import FilterCheckBox from "./FilterCheckBox"
+//components 
+import Slider from "../Slider/Slider";
+
 const sortTypes = [
     {
         label: " Name",
@@ -23,10 +26,23 @@ const sortTypes = [
     },
 ]
 function Filter({ setSelectedFilerOption, charactersLength, selectedOption }) {
+    //state
     const [filterContentVisibility, setFilterContentVisibility] = useState(false);
+    const [sliderValue, setSliderValue] = useState(0)
+
+    //checkBox handler
     const onChange = (e) => {
         setSelectedFilerOption(parseInt(e.target.value));
     }
+
+    const sliderConfig = {
+        handleValue: (event, newValue) => setSliderValue(newValue),
+        maxValue: 100,
+        minValue: 0,
+        sliderValue: sliderValue,
+
+    }
+
     return (
         <div className={filterContentVisibility ? "filter-container" : "filter-container hidden"}>
             <div className={"filter-title"}>
@@ -42,11 +58,16 @@ function Filter({ setSelectedFilerOption, charactersLength, selectedOption }) {
                 </button>
             </div>
             {filterContentVisibility && (
-                sortTypes.map((item, i) => (
-                    <FilterCheckBox key={i} name={item.label} onChange={onChange} selectedOption={selectedOption} value={item.value} />
-                ))
+                <div className="filter-options-container">
+                    <div className="slider-container">
+                        <p>{sliderValue}</p>
+                        <Slider {...sliderConfig} />
+                    </div>
+                    {sortTypes.map((item, i) => (
+                        <FilterCheckBox key={i} name={item.label} onChange={onChange} selectedOption={selectedOption} value={item.value} />
+                    ))}
+                </div>
             )}
-
         </div >
     )
 }
