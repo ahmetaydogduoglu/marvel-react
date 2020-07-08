@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { FaChevronLeft } from 'react-icons/fa';
 import {
     useHistory,
-    Link,
-    Route
 } from "react-router-dom";
 //local files 
 import "./Navbar.css"
@@ -32,9 +30,8 @@ function Navbar({ backButtonVisibility = false }) {
                 <div className="hidden-box"></div>
             </div>
             <div className="router-container">
-                <RouterButton path="/" name={"Characters"}/>
-                <RouterButton name="Comics"/>
-
+                <RouterButton path="/" name={"Characters"} />
+                <RouterButton path="/comics" name={"Comics"} />
             </div>
         </div>
     )

@@ -48,11 +48,12 @@ function Home() {
     const getCharacters = (offset, limit, nameStartsWith = null) => {
         setLoading(true);
         //call get character
+       
         const nameParams = nameStartsWith !== null ? "&nameStartsWith=" + nameStartsWith : "";
         const params = `&limit=${limit}&offset=${offset}${nameParams}`;
+       
         getCharactersList(params).then(content => {
             const sortResult = sorting(content.data.results, selectedFilterOption);
-
             //if page number biggest from totalCount
             if (!filterActive && content.data.count === 0) {
                 paginationChange(1);
@@ -69,7 +70,6 @@ function Home() {
         })
     }
 
-
     //view detail character with id
     const redirectDetail = (characterId) => {
         history.push(`/detail/${characterId}`);
@@ -79,7 +79,6 @@ function Home() {
     const paginationChange = (number) => {
         history.push(`/home/${number}`);
     }
-
 
     const sorting = (data, selectedFilterOption) => {
         let result = []
@@ -139,10 +138,15 @@ function Home() {
     useEffect(() => {
         const searchBoxAction = () => {
             if (searchBox.length > 0) {
-                const findResult = characters.filter(item => item.name === searchBox)
+                const findResult = characters.filter(item => item.name === searchBox);
                 if (searchBox.length > 3) {
                     setFilterActive(true);
-                    if (findResult.length === 0) {
+                    const charactersList = { ...characters };
+                    const compareSearch = searchBox.slice(0, 2);
+                    if (findResult.length === 0 ||
+                        charactersList[0].name.includes(compareSearch) ||
+                        charactersList[charactersList.length - 1].name.includes(compareSearch)
+                    ) {
                         getCharacters(0, 100, searchBox);
                     } else {
                         setCharacters(findResult);

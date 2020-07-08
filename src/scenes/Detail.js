@@ -27,7 +27,6 @@ export default function Detail() {
                 const comicsParams = `&dateRange=2005-01-01,2020-12-12&limit=${15}`
                 return getCharacterComics(id, comicsParams);
             }).then(comics => {
-                console.log(comics.data);
                 setComics(comics.data.results);
             }).catch(error => {
                 alert(error);

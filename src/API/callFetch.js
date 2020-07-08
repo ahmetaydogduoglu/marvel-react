@@ -3,7 +3,7 @@ import apiToken from "../helpers/apiKeyGenerator";
 
 const callFetch = (method, endpoint, params = null, body = null) => {
     return new Promise(function (resolve, reject) {
-        fetch(`${apiUrl}${endpoint}?${apiToken()}${params}`, {
+        fetch(`${apiUrl}${endpoint}?${apiToken()}${params === null ? "" : params}`, {
             method: method,
             headers: {
                 'Content-Type': 'application/json'

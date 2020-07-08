@@ -9,17 +9,16 @@ import PaginationMapping from "../Lists/PaginationMapping"
 
 function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
     const selectPage = () => setSelectedPagintaion(1);
-    console.log(selectedPagination)
     return (
         <>
-            <PaginationButton selectedPagination={selectedPagination } number={1} selectPage={selectPage} />
+            <PaginationButton selectedPagination={selectedPagination} number={1} selectPage={selectPage} />
             {selectedPagination > 3 && <p className="pagination-indacator">...</p>}
             {
                 selectedPagination > 3 ? (
-                    selectedPagination >= totalCount.length - 4 ? (
+                    selectedPagination >= totalCount.length - 3 ? (
                         <PaginationMapping
                             selectedPagination={selectedPagination}
-                            data={totalCount.slice(selectedPagination - 3, totalCount.length-1)}
+                            data={totalCount.slice(selectedPagination - 3, totalCount.length - 1)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />
 
@@ -29,10 +28,9 @@ function Pagination({ totalCount, selectedPagination, setSelectedPagintaion }) {
                                 data={totalCount.slice(selectedPagination - 3, selectedPagination + 2)}
                                 setSelectedPagintaion={setSelectedPagintaion} />
                         )
-
                 ) : (
                         <PaginationMapping
-                            selectedPagination={selectedPagination }
+                            selectedPagination={selectedPagination}
                             data={totalCount.slice(1, 6)}
                             setSelectedPagintaion={setSelectedPagintaion}
                         />

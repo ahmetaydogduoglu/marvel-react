@@ -42,16 +42,19 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  height: 60vh;
+  height: 65vh;
   width: 55%;
   margin-top: 1rem;
   border-radius: 15px;
   background-color: #202020;
   overflow: hidden;
+  -webkit-box-shadow: 10px 10px 19px 0px rgba(168, 166, 168, 1);
+  -moz-box-shadow: 10px 10px 19px 0px rgba(168, 166, 168, 1);
+  box-shadow: 10px 10px 19px 0px rgba(168, 166, 168, 1);
 }
 
 .detail-image-container {
-  width: 45%;
+  width: 50%;
   height: 100%;
 }
 .detail-image-container img {
@@ -59,7 +62,7 @@
   height: 100%;
 }
 .character-description-container {
-  width: 55%;
+  width: 50%;
   height: 100%;
   justify-content: flex-start;
   align-items: center;

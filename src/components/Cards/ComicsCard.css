@@ -1,9 +1,10 @@
 .comics-card-container {
-  width: 15rem;
+  width: 18rem;
   height: 17rem;
   background-color: #202020;
-  margin-top: 15px;
+  margin-top: 10px;
   border-radius: 10px;
+  margin-bottom: 10px;
   box-sizing: border-box;
   background-size: cover;
   background-repeat: no-repeat;
@@ -13,14 +14,18 @@
   flex-direction: column;
   overflow: hidden;
 }
+
 .comic-title-container {
   height: 30%;
   width: 100%;
+  text-align: center;
 }
+
 .comics-card-container p {
   color: white;
   padding: 5px;
 }
+
 .comics-card-container .image-container {
   width: 100%;
   height: 70%;

@@ -15,7 +15,6 @@ class Observer {
     }
 
     searchTextChangeListen() {
-        console.log("alkdjsakldjlskajdlkasjdlkasjdklasjdljsalkjdlkjaslkj")
         return this.searchServices.getText();
     }
 

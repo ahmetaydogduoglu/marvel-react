@@ -42,8 +42,8 @@ function Filter({ setSelectedFilerOption, charactersLength, selectedOption }) {
                 </button>
             </div>
             {filterContentVisibility && (
-                sortTypes.map(item => (
-                    <FilterCheckBox name={item.label} onChange={onChange} selectedOption={selectedOption} value={item.value} />
+                sortTypes.map((item, i) => (
+                    <FilterCheckBox key={i} name={item.label} onChange={onChange} selectedOption={selectedOption} value={item.value} />
                 ))
             )}
 

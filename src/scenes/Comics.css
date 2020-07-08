@@ -1,7 +1,25 @@
-.Comics-Container {
+.comics-container {
   width: 100%;
   height: 92vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.comics-list-container {
+  width: 100%;
+  height: 92vh;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+
+@media screen and (max-width: 992px) {
+  .comics-list-container{
+    justify-content: center;
+  }
 }
